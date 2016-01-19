@@ -1,0 +1,246 @@
+:footer_copyright: Copyright ©2015 Red Hat, Inc.
+:imagesdir: images/
+:speaker: Charles Moulliard (@cmoulliard)
+:speaker-title: Apache Committer, Fuse Expert, Architect
+:speaker-email: cmoulliard@redhat.com
+:speaker-blog: http://cmoulliard.github.io
+:speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
+:talk-speaker: {speaker}
+:talk-name: Développer une application mobile connectée à un backend REST
+:talk-date: 21 Jan 2016
+
+[#cover,data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,left="700px",top="230px"]
+image:snowcamp/logo.png[width="95%"]
+
+[#cover-h1,width="600px",left="0px",top="180px"]
+{talk-name}
+
+[#cover-h2,width="800px",left="0px",top="500px"]
+{speaker} +
+{talk-date}
+
+// ************** who - charles ********
+[#who]
+== Who
+
+[.noredheader,cols="30,70"]
+|===
+| image:speaker/cmoulliard.png[width="90%",height="100%"]
+| {speaker-title}
+
+Blog: {speaker-blog}
+
+Twitter: {speaker-twitter}
+
+Email: {speaker-email} |
+|===
+
+* Committer on Apache Camel, Karaf, Fabric8, Hawtio ... & PMC
+* Technology evangelist
+* Mountain Biker, Belgian Beer Fan, Blogger
+
+// ************** Agenda ********
+[#agenda]
+== Agenda
+
+* Frameworks Ionic, AngularJS
+* Tools : Cordova, Grunt, Nodejs, Ionic
+* RedHat Mobile Platform
+* *Demo - Part I / Local
+* *Demo - Part II / Backend
+
+// ************** frameworks ********
+[#hybridframeworks]
+== Hybrid Mobile Dev
+
+* image:mobile/hybrid-mob-app-development.jpg[800,800]
+
+// ************** frameworks ********
+[#webframeworks]
+== Web Frameworks
+
+* image:web/html5.jpeg[200,200] {icon-plus} image:web/javascript.jpeg[200,200] {icon-plus} image:web/css3-logo.png[200,200]
+
+* image:web/AngularJS-small.png[400,400]
+
+// ************** frameworks ********
+[#ionicframework]
+== Ionic
+
+* Fully integrated with AngularJS
+* Provide AngularJS Extension
+* Huge collection of Widgets (List, Buttons, Footers, ...)
+
+image:mobile/ionic-logo.jpg[100,100]
+
+image:mobile/ionicview.png[]
+
+// ************** frameworks ********
+[#ionicwidget]
+== Ionic List
+
+[source]
+----
+blog.controller('FindAllCtrl', function ($scope, fhcloud, articleService) {
+    $scope.articles = {};
+    fhcloud('/articles/', null, 'GET')
+        .then(function (response) {
+            articleService.replaceArticles(response);
+            $scope.articles = response;
+        })
+});
+----
+
+[source]
+----
+<ion-view view-title="Articles">
+  <ion-content>
+    <ion-list>
+        <ion-item ng-repeat="article in articles | orderBy:['user','title']" href="#/app/article/{{article.id}}">
+            {{article.title}}, posted {{article.postDate}}, by {{article.user}}
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+----
+
+// ************** frameworks ********
+[#cordova]
+== Apache Cordova
+
+* image:mobile/cordova_bot.png[100,100]
+* image:mobile/cordova-plugins.jpg[200,200]
+
+1. Web Based App wrapped into a native Shell
+2. Access to native feature through JS Bridge
+3. Multiplatform
+
+// ************** tool ********
+[#cordova-tool]
+== Cordova Tooling
+
+[source]
+----
+cordova create <PATH> [ID [NAME [CONFIG]]] [options] [PLATFORM...]
+
+Create a Cordova project
+
+    PATH ......................... Where to create the project
+    ID ........................... reverse-domain-style package name - used in <widget id>
+    NAME ......................... human readable field
+
+cordova plugin <command> [options]
+
+Manage project plugins
+
+    add <pluginid>|<directory>|<giturl> [...] ..... add specified plugins
+                                                    pluginid will be matched in --searchpath / registry
+                                                    directory is a directory containing a plugin
+                                                    giturl is a git repo containing a plugin
+----
+
+// ************** tool ********
+[#ionic-tool]
+== Ionic Tooling
+
+[source]
+----
+  _             _
+ (_)           (_)
+  _  ___  _ __  _  ___
+ | |/ _ \| '_ \| |/ __|
+ | | (_) | | | | | (__
+ |_|\___/|_| |_|_|\___|  CLI v1.7.12
+
+=======================
+serve [options] ...............................  Start a local development server for app dev/testing
+      [--port|-p]  ............................  Dev server HTTP port (8100 default)
+      [--livereload-port|-r]  .................  Live Reload port (35729 default)
+      [--address]  ............................  Use specific address or return with failure
+      [--platform|-t]  ........................  Start serve with a specific platform (ios/android)
+
+platform [options] <PLATFORM> .................  Add platform target for building an Ionic app
+         [--noresources|-r]  ..................  Do not add default Ionic icons and splash screen resources
+         [--nosave|-e]  .......................  Do not save the platform to the package.json file
+
+package <command> [options] ...................  Use Ionic Package to build your app (alpha)
+                                                 <command> build android, build ios, list, info, or download
+        [--release]  ..........................  (build <platform>) Mark this build as a release
+        [--profile|-p <tag>]  .................  (build <platform>) Specify the Security Profile to use with this build
+        [--destination|-d <path>]  ............  (download) Specify the destination directory to download your packaged app.
+        ----
+----
+
+// ************** cloud mobile platform ********
+[#cloudmobileplatform]
+== {blank-space}
+
+image:mobile/mobile-application-platform-red-hat.jpg[]
+
+// ************** rest and backend access ********
+[#rest-backend-access]
+== REST Backend
+
+[source]
+----
+app.get('/articles/searchid/:id', blogService.findById);
+app.get('/articles', blogService.findAll);
+app.get('/articles/searchuser/:user', blogService.findByUser)
+app.post('/articles', blogService.newPost);
+----
+
+[source]
+----
+exports.findById = function (req, res, next) {
+    console.log("Service FindById called");
+    var id = req.params.id;
+    request('http://BACKEND_SERVER:9191/blog/article/search/id/' + id, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body);
+            res.send(body);
+        }
+    })
+};
+----
+
+// ************** transition page ************
+[#transition1, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Demo - Part I*
+
+// ************** transition page ************
+[#transition3, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Demo - Part II*
+
+// *********************************
+[#questions]
+== Questions
+
+[#block,top="200px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+[.noredheader,cols="65,.<45"]
+|===
+
+.2+|image:speaker/questions.png[width="95%",height="95%"]
+a|* Twitter : *{speaker-twitter}*
+|===
+
+* More info {icon-arrow-right}
+  - www.jboss.org/products/fuse.html
+  - http://www.redhat.com/en/technologies/jboss-middleware
+  - http://fabric8.io/
