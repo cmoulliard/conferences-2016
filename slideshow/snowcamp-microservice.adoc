@@ -7,9 +7,7 @@
 :speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
 :talk-speaker: {speaker}
 :talk-name: Design a REST Microservice using Apache Camel technology
-:talk-date: 21 Jan 2016
-
-# Développer une application mobile connectée à un système backend
+:talk-date: 22 Jan 2016
 
 [#cover,data-background-color="#F8F8F8"]
 == {blank-space}
@@ -17,7 +15,7 @@
 [#block,left="700px",top="230px"]
 image:snowcamp/logo.png[width="95%"]
 
-[#cover-h1,width="600px",left="0px",top="200px"]
+[#cover-h1,width="600px",left="0px",top="180px"]
 {talk-name}
 
 [#cover-h2,width="800px",left="0px",top="500px"]
