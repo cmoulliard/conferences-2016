@@ -442,6 +442,5 @@ a|* Twitter : *{speaker-twitter}*
 |===
 
 * More info {icon-arrow-right}
-  - www.jboss.org/products/fuse.html
-  - http://www.redhat.com/en/technologies/jboss-middleware
+  - [Camel Rest MicroService in Action](https://github.com/FuseByExample/microservice-camel-in-action)
   - http://fabric8.io/

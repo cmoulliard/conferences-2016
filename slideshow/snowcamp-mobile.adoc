@@ -241,6 +241,5 @@ a|* Twitter : *{speaker-twitter}*
 |===
 
 * More info {icon-arrow-right}
-  - www.jboss.org/products/fuse.html
+  - [Mobile & Backend in Action](https://github.com/FuseByExample/mobile-rest-in-action)
   - http://www.redhat.com/en/technologies/jboss-middleware
-  - http://fabric8.io/
