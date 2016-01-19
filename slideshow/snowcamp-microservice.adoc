@@ -442,5 +442,5 @@ a|* Twitter : *{speaker-twitter}*
 |===
 
 * More info {icon-arrow-right}
-  - [Camel Rest MicroService in Action](https://github.com/FuseByExample/microservice-camel-in-action)
+  - https://github.com/FuseByExample/microservice-camel-in-action[Camel Rest MicroService in Action]
   - http://fabric8.io/

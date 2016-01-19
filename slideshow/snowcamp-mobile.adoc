@@ -47,10 +47,10 @@ Email: {speaker-email} |
 == Agenda
 
 * Frameworks Ionic, AngularJS
-* Tools : Cordova, Grunt, Nodejs, Ionic
-* RedHat Mobile Platform
-* *Demo - Part I / Local
-* *Demo - Part II / Backend
+* Tools : Cordova, Ionic
+* Cloud Mobile Platform
+* Demo - Part I / Local
+* Demo - Part II / Backend
 
 // ************** frameworks ********
 [#hybridframeworks]
@@ -70,13 +70,14 @@ Email: {speaker-email} |
 [#ionicframework]
 == Ionic
 
-* Fully integrated with AngularJS
+[.noredheader,cols="50,50"]
+|===
+a|* Fully integrated with AngularJS
 * Provide AngularJS Extension
 * Huge collection of Widgets (List, Buttons, Footers, ...)
 
-image:mobile/ionic-logo.jpg[100,100]
-
-image:mobile/ionicview.png[]
+image:mobile/ionic-logo.jpg[200,200] | image:mobile/ionicview.png[]
+|===
 
 // ************** frameworks ********
 [#ionicwidget]
@@ -111,12 +112,15 @@ blog.controller('FindAllCtrl', function ($scope, fhcloud, articleService) {
 [#cordova]
 == Apache Cordova
 
-* image:mobile/cordova_bot.png[100,100]
-* image:mobile/cordova-plugins.jpg[200,200]
+[.noredheader,cols="50,50"]
+|===
+a|* Web Based App wrapped into a native Shell
+* Access to native feature through
+  JS Bridge
+* Multiplatform
 
-1. Web Based App wrapped into a native Shell
-2. Access to native feature through JS Bridge
-3. Multiplatform
+image:mobile/cordova_bot.png[100,100] | image:mobile/cordova-plugins.jpg[400,400]
+|===
 
 // ************** tool ********
 [#cordova-tool]
@@ -241,5 +245,5 @@ a|* Twitter : *{speaker-twitter}*
 |===
 
 * More info {icon-arrow-right}
-  - [Mobile & Backend in Action](https://github.com/FuseByExample/mobile-rest-in-action)
+  - https://github.com/FuseByExample/mobile-rest-in-action[Mobile & Backend in Action]
   - http://www.redhat.com/en/technologies/jboss-middleware
