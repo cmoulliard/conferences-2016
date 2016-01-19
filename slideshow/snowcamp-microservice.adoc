@@ -28,9 +28,6 @@ image:snowcamp/logo.png[width="95%"]
 [#who]
 == Who
 
-[#block,top="0px",left="800px"]
-image:{revealjs_conference_logo}[width="80%"]
-
 [.noredheader,cols="30,70"]
 |===
 | image:speaker/cmoulliard.png[width="90%",height="100%"]
@@ -51,9 +48,6 @@ Email: {speaker-email} |
 [#agenda]
 == Agenda
 
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
-
 * MicroService
 * Apache Camel
 * Docker Container
@@ -73,9 +67,6 @@ image::{revealjs_conference_logo}[]
 // ************** microservice ************
 [#microservice]
 == MicroService
-
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
 
 * It is an *architectural* style where an *application*
 * {icon-arrow-right} composed of *individual* standalone *services*
@@ -267,9 +258,6 @@ image::{revealjs_conference_logo}[]
 [#process]
 == Process
 
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
-
 [#block,width="800px",top="50px"]
 image:container/docker-animated-1.gif[]
 
@@ -293,15 +281,12 @@ image:container/dockerfile.png[width="95%"]
 [#docker]
 == Docker
 
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
-
-* *Container runtime*, *image* distribution, *Process* launcher
+* *Container runtime*, *Process* launcher
 
 [#block,width="650px",top="150px"]
 image:container/docker-animated-2.gif[]
 
-[#block,width="100px",top="-20px",left="200px"]
+[#block,width="100px",top="-50px",left="160px"]
 image:container/docker-logo.png[width="25%",height="25%"]
 
 // ************** transition page ************
@@ -334,11 +319,9 @@ image::{revealjs_conference_logo}[]
 [#kubernetes]
 == Kubernetes
 
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
-
 * Runtime & *Operational management* of containers
-* ApiServer (event, status), *Scheduler*, *Controller* & State Storage
+* ApiServer (event, status)
+* *Scheduler*, *Controller* & State Storage
 * *Agent - Kubelet* - manage containers on host
 * Containers {icon-arrow-right} *pods* (= shared docker containers)
 
@@ -348,18 +331,12 @@ image:container/kubernetes-logo.png[width="25%",height="25%"]
 [#kubernetes-platform]
 == Kubernetes
 
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
-
 [#block,width="800px",left="0px",top="50px"]
 image:container/kubernetes-platform.png[]
 
 // ************** kubernetes ************
 [#pord-docker]
 == Pod & docker
-
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
 
 image:fabric8/fabric8-pod.png[]
 
@@ -369,9 +346,6 @@ image:fabric8/fabric8-pod.png[]
 [#pod-port]
 == Pod & port
 
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
-
 image:fabric8/fabric8-pod-port.png[]
 
 * Ports can be *exposed*
@@ -379,9 +353,6 @@ image:fabric8/fabric8-pod-port.png[]
 // ************** kubernetes ************
 [#pod-volume]
 == Pod & volume
-
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
 
 image:fabric8/fabric8-pod-volume.png[]
 
@@ -391,9 +362,6 @@ image:fabric8/fabric8-pod-volume.png[]
 [#kubernetes-service]
 == Kubernetes Service
 
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
-
 image:fabric8/fabric8-service-pod.png[]
 
 * Kube Service *loadbalanced* through the pods using *HA-Proxy*
@@ -402,9 +370,6 @@ image:fabric8/fabric8-service-pod.png[]
 // ************** kubernetes ************
 [#kube-application]
 == Kube Application JSon
-
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
 
 [.noredheader]
 |===
@@ -425,9 +390,6 @@ image::{revealjs_conference_logo}[]
 [#fabric8-plugin]
 == http://fabric8.io/gitbook/mavenPlugin.html[Fabric8 Maven Plugin]
 
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
-
 * docker:build {icon-arrow-right} Build image of app
 
 * docker:push {icon-arrow-right} Push image
@@ -447,9 +409,6 @@ image:{revealjs_conference_logo}[width="80%"]
 // ************** fabric8 ************
 [#fabric8-desc]
 == {blank-space}
-
-[#block,top="0px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
 
 [#block,width="800px",top="0px"]
 image:fabric8/fabric8-diagram1.png[width="80%",height="80%"]
