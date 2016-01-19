@@ -1,0 +1,490 @@
+:footer_copyright: Copyright ©2015 Red Hat, Inc.
+:imagesdir: images/
+:speaker: Charles Moulliard (@cmoulliard)
+:speaker-title: Apache Committer, Fuse Expert, Architect
+:speaker-email: cmoulliard@redhat.com
+:speaker-blog: http://cmoulliard.github.io
+:speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
+:talk-speaker: {speaker}
+:talk-name: Design a REST Microservice using Apache Camel technology
+:talk-date: 21 Jan 2016
+
+# Développer une application mobile connectée à un système backend
+
+[#cover,data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,left="700px",top="230px"]
+image:snowcamp/logo.png[width="95%"]
+
+[#cover-h1,width="600px",left="0px",top="200px"]
+{talk-name}
+
+[#cover-h2,width="800px",left="0px",top="500px"]
+{speaker} +
+{talk-date}
+
+// ************** who - charles ********
+[#who]
+== Who
+
+[#block,top="0px",left="800px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+[.noredheader,cols="30,70"]
+|===
+| image:speaker/cmoulliard.png[width="90%",height="100%"]
+| {speaker-title}
+
+Blog: {speaker-blog}
+
+Twitter: {speaker-twitter}
+
+Email: {speaker-email} |
+|===
+
+* Committer on Apache Camel, Karaf, Fabric8, Hawtio ... & PMC
+* Technology evangelist
+* Mountain Biker, Belgian Beer Fan, Blogger
+
+// ************** Agenda ********
+[#agenda]
+== Agenda
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+* MicroService
+* Apache Camel
+* Docker Container
+* OpenShift & Kubernetes
+* Fabric8 tooling
+
+// ************** transition page ************
+[#transition1, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*MicroService*
+
+// ************** microservice ************
+[#microservice]
+== MicroService
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+* It is an *architectural* style where an *application*
+* {icon-arrow-right} composed of *individual* standalone *services*
+* {icon-arrow-right} *communicating* using *lightweight* protocols
+* {icon-arrow-right} in *event* based manner
+
+// ************** transition page ************
+[#transition2, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Apache Camel*
+
+// ************** Camel ************
+[#apache-camel]
+== Apache Camel
+
+image::camel/camel-box-small.png[width="100%",float="right"]
+
+* Java **Integration** Framework
+
+[.newline]
+* Implements {icon-arrow-right} **D**omain **S**pecific **L**anguage
+
+[.newline]
+* Supports **E**nterprise **I**ntegration **P**atterns
+
+image::eip/book.jpg[width="45%",float="right"]
+
+// ************** Camel ************
+//[data-background="white"]
+[#eip]
+== Enterprise Patterns
+
+* http://camel.apache.org/enterprise-integration-patterns.html[> 50 patterns] implemented
+* and more : Loadbalancer, Throttler, Delayer, ...
+
+image::eip/patterns.png[width="100%",float="left"]
+
+image::eip/patterns-3.jpg[width="120%",float="left"]
+
+// ************** Camel ************
+[#key-concepts]
+== Key concepts
+
+[.noredheader,cols="35,65"]
+|===
+| .2+|image:camel/factory.png[]
+a|
+* Component
+* Endpoint
+* Consumer
+* Producer|
+|===
+
+// ************** Camel ************
+[#camel-route]
+== Route, processor
+
+* Camel project {icon-arrow-right} Collection of routes
+* Route {icon-angle-double-right} Processor(s) + Interceptor(s)
+* Producing or consuming Messages/Exchanges
+
+image:camel/pipeline.png[]
+
+// ************** Camel ************
+[#camel-howto7]
+== Java DSL
+
+* Fluent API
+
+[source,java]
+----
+import org.apache.camel.builder.RouterBuilder;
+
+public class FilterRoute extends RouteBuilder {
+  public void configure() throws Exception {
+    Endpoint A = endpoint("activemq:queue:all");
+    Endpoint B = endpoint("activemq:widget");
+    Predicate isWidget = xpath("/quote/product = 'widget'");
+
+    from(A).filter(isWidget).to(B);
+  }
+}
+----
+
+// ************** Camel ************
+[#camel-howto8]
+== XML DSL
+
+* Spring, Blueprint
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+    ">
+
+   <bean id="quotesService" class="my.cool.demo.camel.QuotesService"/>"
+
+    <camelContext  xmlns="http://camel.apache.org/schema/spring">
+        <route>
+            <from uri="activemq:queue:all"/>
+            <filter>
+                <xpath>"/quote/product/ = 'widget"</xpath>
+                <bean id="quotesService" method="widget"/>
+            </filter>
+        </route>
+    </camelContext>
+----
+
+// ************** Camel ************
+[#camel-context]
+== Container
+
+[.noredheader,cols="45,65"]
+|===
+| .2+|image:camel/camel-features.png[]
+a| * Routes/*Endpoints* registered {icon-arrow-right} CamelContext
+   * Policy
+   ** Security
+   ** Lifecycle
+   * Tracing
+   * JMX
+   * Threads can be configured |
+|===
+
+
+// ************** Camel ************
+[#rest-dsl]
+== REST DSL
+[source,java]
+----
+    @Override public void configure() throws Exception {
+
+        restConfiguration()
+            .component("servlet") // <1>
+            .host(HOST)           // <2>
+            .setPort(PORT);       // <3>
+
+        // use the rest DSL to define the rest services
+        rest("/users/")  // <4>
+            .get("{id}/hello") // <5>
+                .route()
+                .process(new Processor() {
+                    public void process(Exchange exchange) throws Exception {
+                        String id = exchange.getIn().getHeader("id", String.class);
+                        exchange.getOut().setBody("Hello " + id + "! Welcome from pod : " + System.getenv("HOSTNAME") );
+                    }
+                });
+----
+<1> One of the components available : srvlet, jetty, netty, cxf, spark
+<2> Hostname
+<3> Port
+<4> Root of the REST Application endpoint
+<5> Verb (Get, Put, Post, Delete, Options)
+
+// ************** transition page ************
+[#transition3, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="250px",top="200px"]
+*Demo*
+
+[#block,width="600px",left="70px",top="500px"]
+image::microservice/microservice-rest.png[]
+
+// ************** transition page ************
+[#transition4, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Docker Container*
+
+// ************** docker ************
+[#process]
+== Process
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+[#block,width="800px",top="50px"]
+image:container/docker-animated-1.gif[]
+
+// ************** docker ************
+[#docker-image]
+== Docker
+
+image:container/docker-filesystems-multilayer.png[width="60%,height="60%"]
+
+* Union *FS* mounted with immutable images
+* Benefits: *portability*, *reusability*, versioning, application-centric
+
+// ************** docker ************
+[#docker-config]
+== Docker config
+
+[#block,width="150px",top="50px",left="50px"]
+image:container/dockerfile.png[width="95%"]
+
+// ************** docker ************
+[#docker]
+== Docker
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+* *Container runtime*, *image* distribution, *Process* launcher
+
+[#block,width="650px",top="150px"]
+image:container/docker-animated-2.gif[]
+
+[#block,width="100px",top="-20px",left="200px"]
+image:container/docker-logo.png[width="25%",height="25%"]
+
+// ************** transition page ************
+[#transition5, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*With Docker*
+
+// ************** transition page ************
+[#demo-docker]
+== {blank-space}
+
+image:microservice/microservice-docker-rest.png[]
+
+// ************** transition page ************
+[#transition6, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Kubernetes & Openshift*
+
+// ************** kubernetes ************
+[#kubernetes]
+== Kubernetes
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+* Runtime & *Operational management* of containers
+* ApiServer (event, status), *Scheduler*, *Controller* & State Storage
+* *Agent - Kubelet* - manage containers on host
+* Containers {icon-arrow-right} *pods* (= shared docker containers)
+
+image:container/kubernetes-logo.png[width="25%",height="25%"]
+
+// ************** kubernetes ************
+[#kubernetes-platform]
+== Kubernetes
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+[#block,width="800px",left="0px",top="50px"]
+image:container/kubernetes-platform.png[]
+
+// ************** kubernetes ************
+[#pord-docker]
+== Pod & docker
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+image:fabric8/fabric8-pod.png[]
+
+* Communicate to each other using *skyDNS* to resolve hostname
+
+// ************** kubernetes ************
+[#pod-port]
+== Pod & port
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+image:fabric8/fabric8-pod-port.png[]
+
+* Ports can be *exposed*
+
+// ************** kubernetes ************
+[#pod-volume]
+== Pod & volume
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+image:fabric8/fabric8-pod-volume.png[]
+
+* *Share data* using *mounted volume* between host & container
+
+// ************** kubernetes ************
+[#kubernetes-service]
+== Kubernetes Service
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+image:fabric8/fabric8-service-pod.png[]
+
+* Kube Service *loadbalanced* through the pods using *HA-Proxy*
+ *Routes* map *private* with *public* IP address
+
+// ************** kubernetes ************
+[#kube-application]
+== Kube Application JSon
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+[.noredheader]
+|===
+| image:container/kubernetes-json-1.png[width="85%"] | image:container/kubernetes-json-2.png[width="65%"]
+|===
+
+// ************** transition page ************
+[#transition7, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Fabric8*
+
+// ************** fabric v2 ************
+[#fabric8-plugin]
+== http://fabric8.io/gitbook/mavenPlugin.html[Fabric8 Maven Plugin]
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+* docker:build {icon-arrow-right} Build image of app
+
+* docker:push {icon-arrow-right} Push image
+
+{space}
+
+* fabric8:json {icon-arrow-right} generates Kube MetaData App
+
+* fabric8:apply {icon-arrow-right} deploy on Openshift
+* fabric8:recreate {icon-arrow-right} redeploy on Openshift
+* fabric8:devops {icon-arrow-right} automate pipeline creation
+
+{space}
+
+* and more to create env, delete pods, create routes
+
+// ************** fabric8 ************
+[#fabric8-desc]
+== {blank-space}
+
+[#block,top="0px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+[#block,width="800px",top="0px"]
+image:fabric8/fabric8-diagram1.png[width="80%",height="80%"]
+
+// ************** transition page ************
+[#transition8, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*With OpenShift & Kubernetes*
+
+// ***************** Demo *****************
+[#demo-kubernetes]
+== {blank-space}
+
+image:microservice/microservice-kubernetes-rest.png[]
+
+// *********************************
+[#questions]
+== Questions
+
+[#block,top="200px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+[.noredheader,cols="65,.<45"]
+|===
+
+.2+|image:speaker/questions.png[width="95%",height="95%"]
+a|* Twitter : *{speaker-twitter}*
+|===
+
+* More info {icon-arrow-right}
+  - www.jboss.org/products/fuse.html
+  - http://www.redhat.com/en/technologies/jboss-middleware
+  - http://fabric8.io/
