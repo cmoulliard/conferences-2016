@@ -297,6 +297,5 @@ image:{revealjs_conference_logo}[width="80%"]
 a|* Twitter : *{speaker-twitter}*
 |===
 
-* More info {icon-arrow-right}
-  - https://github.com/FuseByExample/mobile-rest-in-action[Mobile REST in Action]
-  - https://github.com/FuseByExample/rest-dsl-in-action[REST Backend with Camel DSL]
+- Mobile Backend {icon-arrow-right} *github.com/FuseByExample/mobile-rest-in-action*
+- REST with Camel {icon-arrow-right} *github.com/FuseByExample/rest-dsl-in-action*
