@@ -46,9 +46,13 @@ Email: {speaker-email} |
 [#agenda]
 == Agenda
 
-* Frameworks Ionic, AngularJS
-* Tools : Cordova, Ionic
-* Cloud Mobile Platform
+* Requirements
+** Hybrid HTML5 Mobile
+** Frameworks
+** Tools
+** Integration Technology
+** Cloud Mobile Platform
+
 * Demo - Part I / Local
 * Demo - Part II / Backend
 
@@ -59,12 +63,22 @@ Email: {speaker-email} |
 * image:mobile/hybrid-mob-app-development.jpg[800,800]
 
 // ************** frameworks ********
-[#webframeworks]
-== Web Frameworks
+[#html5]
+== HTML5
 
-* image:web/html5.jpeg[200,200] {icon-plus} image:web/javascript.jpeg[200,200] {icon-plus} image:web/css3-logo.png[200,200]
+[#block,left="50px",top="200px"]
+image:web/html5.jpeg[200,200] {icon-plus} image:web/javascript.jpeg[200,200] {icon-plus} image:web/css3-logo.png[200,200]
 
-* image:web/AngularJS-small.png[400,400]
+// ************** frameworks ********
+[#angularjs]
+== JavaScript
+
+[.noredheader,cols="40,60"]
+|===
+a|* Model {icon-arrow-left}{icon-arrow-right} View {icon-arrow-left}{icon-arrow-right} Controller
+* Improve project design
+* Reduce coding lines | image:web/AngularJS-small.png[500,500]
+|===
 
 // ************** frameworks ********
 [#ionicframework]
@@ -182,11 +196,50 @@ package <command> [options] ...................  Use Ionic Package to build your
 [#cloudmobileplatform]
 == {blank-space}
 
+[#block,left="0px",top="20px"]
 image:mobile/mobile-application-platform-red-hat.jpg[]
 
 // ************** rest and backend access ********
+[#backend-integration1]
+== How to integrate
+
+image:mobile-integration1.png[1000,1000]
+
+// ************** rest and backend access ********
+[#backend-integration2]
+== Nodejs Proxy Server
+
+image:mobile-integration2.png[1000,1000]
+
+// ************** rest and backend access ********
 [#rest-backend-access]
-== REST Backend
+== JS Front Service
+
+[source]
+----
+blog.service('fhcloud', function ($q) {
+
+    return function (cloudEndpoint, data, operation) {
+        var defer = $q.defer();
+
+        var params = {
+            path: cloudEndpoint,
+            method: operation,
+            contentType: "application/json",
+            data: data,
+            timeout: 15000
+        };
+
+        $fh.cloud(params, defer.resolve, defer.reject);
+
+        return defer.promise;
+    };
+});
+----
+
+// ************** rest and backend access ********
+[#rest-backend-access]
+== REST endpoint (Proxy)
 
 [source]
 ----
@@ -245,5 +298,5 @@ a|* Twitter : *{speaker-twitter}*
 |===
 
 * More info {icon-arrow-right}
-  - https://github.com/FuseByExample/mobile-rest-in-action[Mobile & Backend in Action]
-  - http://www.redhat.com/en/technologies/jboss-middleware
+  - https://github.com/FuseByExample/mobile-rest-in-action[Mobile REST in Action]
+  - https://github.com/FuseByExample/rest-dsl-in-action[REST Backend with Camel DSL]
