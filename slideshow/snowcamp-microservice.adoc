@@ -45,8 +45,7 @@ image:snowcamp/logo.png[width="95%"]
 * Integration ...
 * Apache Camel
 * Micro Container
-* OpenShift & Kubernetes
-* Fabric8 tooling
+* Kubernetes Service
 
 // ************** transition page ************
 [#transition1, data-background-color="#F8F8F8"]
