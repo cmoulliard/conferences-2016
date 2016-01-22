@@ -1,7 +1,7 @@
 :footer_copyright: Copyright ©2015 Red Hat, Inc.
 :imagesdir: images/
 :speaker: Charles Moulliard (@cmoulliard)
-:speaker-title: Apache Committer, Fuse Expert, Architect
+:speaker-title: Committer, Coder, Architect
 :speaker-email: cmoulliard@redhat.com
 :speaker-blog: http://cmoulliard.github.io
 :speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
@@ -26,29 +26,25 @@ image:snowcamp/logo.png[width="95%"]
 [#who]
 == Who
 
-[.noredheader,cols="30,70"]
-|===
-| image:speaker/cmoulliard.png[width="90%",height="100%"]
-| {speaker-title}
+* {speaker-title}
 
-Blog: {speaker-blog}
+* Work on Apache Camel, Karaf, Fabric8, Hawtio, Apiman, DeltaSpike
 
-Twitter: {speaker-twitter}
+* Mountain Biker, Belgian Beer Fan
 
-Email: {speaker-email} |
-|===
+* Blog: {speaker-blog}
 
-* Committer on Apache Camel, Karaf, Fabric8, Hawtio ... & PMC
-* Technology evangelist
-* Mountain Biker, Belgian Beer Fan, Blogger
+* Twitter: {speaker-twitter}
+
+* Email: {speaker-email}
 
 // ************** Agenda ********
 [#agenda]
 == Agenda
 
-* MicroService
+* Integration ...
 * Apache Camel
-* Docker Container
+* Micro Container
 * OpenShift & Kubernetes
 * Fabric8 tooling
 
@@ -60,16 +56,43 @@ Email: {speaker-email} |
 image::{revealjs_conference_logo}[]
 
 [#cover-h1,width="600px",left="0px",top="400px"]
-*MicroService*
+*Integration ...*
+
+// ************** integration ************
+[#integration]
+== Point to Point vision
+
+image:integration.png[]
+
+Integrate many systems. Play with formats & protocols
+
+// ************** integration ************
+[#integration-eai]
+== Hub Approach
+
+image:integration-EAI.png[]
+
+In 2003, it was reported that 70% of all EAI projects fail !
+
+// ************** integration ************
+[#integration-esb]
+== Bus
+
+image:entservbus.gif[]
+
+Communication done through a Bus with Normalized messages
 
 // ************** microservice ************
 [#microservice]
 == MicroService
 
-* It is an *architectural* style where an *application*
+[.noredheader]
+|===
+a|* It is an *architectural* style where an application
 * {icon-arrow-right} composed of *individual* standalone *services*
 * {icon-arrow-right} *communicating* using *lightweight* protocols
-* {icon-arrow-right} in *event* based manner
+* {icon-arrow-right} in *event* based manner | image:microservice2.png[500,500]
+|===
 
 // ************** transition page ************
 [#transition2, data-background-color="#F8F8F8"]
@@ -107,29 +130,13 @@ image::eip/book.jpg[width="45%",float="right"]
 
 image::eip/patterns.png[width="100%",float="left"]
 
-image::eip/patterns-3.jpg[width="120%",float="left"]
-
-// ************** Camel ************
-[#key-concepts]
-== Key concepts
-
-[.noredheader,cols="35,65"]
-|===
-| .2+|image:camel/factory.png[]
-a|
-* Component
-* Endpoint
-* Consumer
-* Producer|
-|===
-
 // ************** Camel ************
 [#camel-route]
 == Route, processor
 
 * Camel project {icon-arrow-right} Collection of routes
-* Route {icon-angle-double-right} Processor(s) + Interceptor(s)
-* Producing or consuming Messages/Exchanges
+* Route = Processor(s) + Interceptor(s)
+* Producing or consuming Message
 
 image:camel/pipeline.png[]
 
@@ -137,22 +144,21 @@ image:camel/pipeline.png[]
 [#camel-howto7]
 == Java DSL
 
-* Fluent API
-
 [source,java]
 ----
 import org.apache.camel.builder.RouterBuilder;
 
 public class FilterRoute extends RouteBuilder {
-  public void configure() throws Exception {
-    Endpoint A = endpoint("activemq:queue:all");
-    Endpoint B = endpoint("activemq:widget");
-    Predicate isWidget = xpath("/quote/product = 'widget'");
 
-    from(A).filter(isWidget).to(B);
+  public void configure() throws Exception {
+
+    from("activemq:queue:all")
+    .filter(xpath("/quote/product = 'widget'"))
+    .to("activemq:widget");
   }
 }
 ----
+* Fluent API, extend RouteBuilder class
 
 // ************** Camel ************
 [#camel-howto8]
@@ -184,23 +190,6 @@ public class FilterRoute extends RouteBuilder {
 ----
 
 // ************** Camel ************
-[#camel-context]
-== Container
-
-[.noredheader,cols="45,65"]
-|===
-| .2+|image:camel/camel-features.png[]
-a| * Routes/*Endpoints* registered {icon-arrow-right} CamelContext
-   * Policy
-   ** Security
-   ** Lifecycle
-   * Tracing
-   * JMX
-   * Threads can be configured |
-|===
-
-
-// ************** Camel ************
 [#rest-dsl]
 == REST DSL
 [source,java]
@@ -223,11 +212,27 @@ a| * Routes/*Endpoints* registered {icon-arrow-right} CamelContext
                     }
                 });
 ----
-<1> One of the components available : srvlet, jetty, netty, cxf, spark
+<1> One of the components available : servlet, jetty, netty, spark, restlet, undertow
 <2> Hostname
 <3> Port
 <4> Root of the REST Application endpoint
 <5> Verb (Get, Put, Post, Delete, Options)
+
+// ************** Camel ************
+[#camel-context]
+== Container agnostic
+
+[.noredheader,cols="45,65"]
+|===
+| .2+|image:camel/camel-features.png[]
+a| * Endpoints registered {icon-arrow-right} CamelContext
+   * Policy
+   ** Security
+   ** Lifecycle
+   * Tracing
+   * JMX
+   * Threads can be configured |
+|===
 
 // ************** transition page ************
 [#transition3, data-background-color="#F8F8F8"]
@@ -286,6 +291,48 @@ image:container/docker-animated-2.gif[]
 
 [#block,width="100px",top="-50px",left="160px"]
 image:container/docker-logo.png[width="25%",height="25%"]
+
+// ************** docker plugin ************
+[#docker-plugin]
+== Maven Docker Plugin
+
+* docker:build {icon-arrow-right} Build image of app
+* docker:push {icon-arrow-right} Push image
+
+[source,xml]
+----
+<docker.from>fabric8/s2i-java:1.2</docker.from>
+<docker.image>${docker.registryPrefix}fabric8/${project.artifactId}:${project.version}</docker.image>
+<docker.port.container.jolokia>8778</docker.port.container.jolokia>
+<docker.registryPrefix>${env.DOCKER_REGISTRY}/</docker.registryPrefix>
+----
+
+[source,xml]
+----
+<plugin>
+    <groupId>org.jolokia</groupId>
+    <artifactId>docker-maven-plugin</artifactId>
+    <version>${docker.maven.plugin.version}</version>
+    <configuration>
+      <images>
+        <image>
+          <name>${docker.image}</name>
+          <build>
+            <from>${docker.from}</from>
+            <assembly>
+              <basedir>/deployments</basedir>
+              <descriptorRef>hawt-app</descriptorRef>
+            </assembly>
+            <env>
+              <JAVA_LIB_DIR>/deployments/lib</JAVA_LIB_DIR>
+              <JAVA_MAIN_CLASS>org.apache.camel.cdi.Main</JAVA_MAIN_CLASS>
+            </env>
+          </build>
+        </image>
+      </images>
+    </configuration>
+</plugin>
+----
 
 // ************** transition page ************
 [#transition5, data-background-color="#F8F8F8"]
@@ -388,28 +435,35 @@ image::{revealjs_conference_logo}[]
 [#fabric8-plugin]
 == http://fabric8.io/gitbook/mavenPlugin.html[Fabric8 Maven Plugin]
 
-* docker:build {icon-arrow-right} Build image of app
-
-* docker:push {icon-arrow-right} Push image
-
-{space}
-
-* fabric8:json {icon-arrow-right} generates Kube MetaData App
-
+* fabric8:json {icon-arrow-right} generates Kube MetaData
 * fabric8:apply {icon-arrow-right} deploy on Openshift
-* fabric8:recreate {icon-arrow-right} redeploy on Openshift
-* fabric8:devops {icon-arrow-right} automate pipeline creation
 
-{space}
+[source,xml]
+----
+<fabric8.service.name>hellorest</fabric8.service.name>
+<fabric8.service.port>9090</fabric8.service.port>
+<fabric8.service.containerPort>8080</fabric8.service.containerPort>
 
-* and more to create env, delete pods, create routes
+<fabric8.label.component>${project.artifactId}</fabric8.label.component>
+<fabric8.label.container>tomcat</fabric8.label.container>
+<fabric8.label.group>demo</fabric8.label.group>
+<fabric8.service.type>LoadBalancer</fabric8.service.type>
+<fabric8.iconRef>camel</fabric8.iconRef>
+----
 
-// ************** fabric8 ************
-[#fabric8-desc]
-== {blank-space}
-
-[#block,width="800px",top="0px"]
-image:fabric8/fabric8-diagram1.png[width="80%",height="80%"]
+[source,xml]
+----
+<plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>${fabric8.version}</version>
+        <executions>
+          <execution>
+            <id>json</id>
+            <goals>
+              <goal>json</goal>
+            </goals>
+----
 
 // ************** transition page ************
 [#transition8, data-background-color="#F8F8F8"]
@@ -441,6 +495,5 @@ image:{revealjs_conference_logo}[width="80%"]
 a|* Twitter : *{speaker-twitter}*
 |===
 
-* More info {icon-arrow-right}
-  - https://github.com/FuseByExample/microservice-camel-in-action[Camel Rest MicroService in Action]
-  - http://fabric8.io/
+* Camel Rest MicroService in Action {icon-arrow-right} *https://github.com/FuseByExample/microservice-camel-in-action*
+* http://fabric8.io/
