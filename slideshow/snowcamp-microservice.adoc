@@ -55,7 +55,7 @@ image:snowcamp/logo.png[width="95%"]
 image::{revealjs_conference_logo}[]
 
 [#cover-h1,width="600px",left="0px",top="400px"]
-*Integration ...*
+*Integration*
 
 // ************** integration ************
 [#integration]
