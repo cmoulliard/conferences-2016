@@ -8,7 +8,7 @@
 * Edit the conference-scss file and generate the css as such
 
 ```
-compass compile --fonts-dir 'fonts' --css-dir 'slideshow/generated/revealjs-redhat/lib/css' --sass-dir 'slideshow/generated/sass' -e development --output-style=expanded --force
+compass compile --fonts-dir 'fonts' --css-dir 'slideshow/generated/revealjs-redhat/lib/css' --sass-dir 'slideshow/sass' -e development --output-style=expanded --force
 ```    
 Remark : This step is not longer required as the sass files are included within hyla now
 

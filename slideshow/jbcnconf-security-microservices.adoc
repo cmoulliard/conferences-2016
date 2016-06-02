@@ -6,7 +6,7 @@
 :speaker-blog: http://cmoulliard.github.io
 :speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
 :talk-speaker: {speaker}
-:talk-name: Security enforcement of Java Application with API Management
+:talk-name: Security enforcement of Microservices with API Management
 :talk-date: 17 June 2016
 
 [#cover,data-background-color="#F8F8F8"]
