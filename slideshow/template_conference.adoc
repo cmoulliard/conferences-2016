@@ -1,7 +1,7 @@
-:footer_copyright: Copyright ©2015 Red Hat, Inc.
+:footer_copyright: Copyright ©2016 Red Hat, Inc.
 :imagesdir: images/
-:speaker: Charles Moulliard
-:speaker-title: Pr. Solution Architect, Fuse Expert, Apache Committer
+:speaker: Charles Moulliard (@cmoulliard)
+:speaker-title: Committer, Coder, Architect
 :speaker-email: cmoulliard@redhat.com
 :speaker-blog: http://cmoulliard.github.io
 :speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
