@@ -1,0 +1,83 @@
+:footer_copyright: Copyright ©2015 Red Hat, Inc.
+:imagesdir: images/
+:speaker: Charles Moulliard (@cmoulliard)
+:speaker-title: Committer, Coder, Architect
+:speaker-email: cmoulliard@redhat.com
+:speaker-blog: http://cmoulliard.github.io
+:speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
+:talk-speaker: {speaker}
+:talk-name: Security enforcement of Java Application with API Management
+:talk-date: 17 June 2016
+
+[#cover,data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,left="700px",top="230px"]
+image:snowcamp/logo.png[width="95%"]
+
+[#cover-h1,width="600px",left="0px",top="180px"]
+{talk-name}
+
+[#cover-h2,width="800px",left="0px",top="500px"]
+{speaker} +
+{talk-date}
+
+// ************** who - charles ********
+[#who]
+== Who
+
+* {speaker-title}
+
+* Work on Apache Camel, Karaf, Fabric8, Hawtio, Apiman, DeltaSpike
+
+* Mountain Biker, Belgian Beer Fan
+
+* Blog: {speaker-blog}
+
+* Twitter: {speaker-twitter}
+
+* Email: {speaker-email}
+
+// ************** Agenda ********
+[#agenda]
+== Agenda
+
+* Integration ...
+* Apache Camel
+* Micro Container
+* Kubernetes Service
+
+// ************** transition page ************
+[#transition1, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Integration*
+
+// ************** integration ************
+[#integration]
+== Point to Point vision
+
+image:integration.png[]
+
+Integrate many systems. Play with formats & protocols
+
+// *********************************
+[#questions]
+== Questions
+
+[#block,top="200px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+[.noredheader,cols="65,.<45"]
+|===
+
+.2+|image:speaker/questions.png[width="95%",height="95%"]
+a|* Twitter : *{speaker-twitter}*
+|===
+
+* Camel Rest MicroService in Action {icon-arrow-right} *https://github.com/FuseByExample/microservice-camel-in-action*
+* http://fabric8.io/
