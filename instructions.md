@@ -10,6 +10,7 @@
 ```
 compass compile --fonts-dir 'fonts' --css-dir 'slideshow/generated/revealjs-redhat/lib/css' --sass-dir 'slideshow/generated/sass' -e development --output-style=expanded --force
 ```    
+Remark : This step is not longer required as the sass files are included within hyla now
 
 # Move content to Github io
 
@@ -28,7 +29,7 @@ Home page of the content : http://cmoulliard.github.io/emea-partners-2015/slides
     git rm .gitignore
     rm -rf slideshow  
     
-## Add content  - first time
+## Add content - first time
 
     ./import_site.sh
     git add slideshow
