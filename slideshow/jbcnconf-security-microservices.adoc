@@ -112,7 +112,6 @@ image:security/security-logo.jpg[]
 [#security-global]
 == Approaches
 
-* REST endpoint
 * Security "Aspect" {icon-arrow-right} 3 levels
 ** Endpoint : Framework/Policy/Interceptor
 ** HTTP Web Container : Handler & Constraints
@@ -137,7 +136,7 @@ image::security/rustylock.png[]
 [#security-endpoint-level]
 == Endpoint level
 
-image:security/rest-2.png[width=95%]
+image:security/rest-3.png[width=95%]
 
 // ************** security - rest ************
 [#security-endpoint]
@@ -208,7 +207,7 @@ image::{revealjs_conference_logo}[]
 [#security-container-level]
 == Web container level
 
-image:security/rest-3.png[width=95%]
+image:security/rest-2.png[width=95%]
 
 // ************** security - rest ************
 [#security-handler]
