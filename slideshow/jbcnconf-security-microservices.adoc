@@ -68,7 +68,33 @@ image::{revealjs_conference_logo}[]
 * Camel CXF endpoint exposing a Service
 * Security based on HTTP Basic Auth + Role + Path
 
-image:security/security-logo.jpg[]
+// ************** security - rest ************
+[#security-uc-code]
+== REST Endpoint
+
+[source,java]
+----
+    @GET
+    @Path("/customers/{id}/")
+    @Produces("application/xml")
+    @ApiOperation(value = "Find Customer by ID", notes = "More notes about this method", response = Customer.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Invalid ID supplied"),
+            @ApiResponse(code = 204, message = "Customer not found")
+    })
+    public Customer getCustomer(@ApiParam(value = "ID of Customer to fetch", required = true) @PathParam("id") String id) {
+        LOG.info("Invoking getCustomer, Customer id is: {}", id);
+        long idNumber = Long.parseLong(id);
+        Customer c = customers.get(idNumber);
+        return c;
+    }
+----
+
+// ************** security - rest ************
+[#security-uc-services]
+== Services
+
+image:security/swagger-service.png[width=95%]
 
 // ************** transition page ************
 [#transition2, data-background-color="#F8F8F8"]
@@ -79,6 +105,8 @@ image::{revealjs_conference_logo}[]
 
 [#cover-h1,width="600px",left="0px",top="300px"]
 *Security +Aspect+*
+
+image:security/security-logo.jpg[]
 
 // ************** security - rest ************
 [#security-global]
@@ -120,13 +148,45 @@ image:security/spring_security.png[]
 [#security-endpoint-code-camel]
 == Endpoint
 
-* Apache Camel Policy
+* Goal : Extract from the HTTP request the info needed to authenticate a user
+* How : Use a Camel Policy to wrap the Route / Pipeline with a new processor
+* Camel Authorization Policy extends the Policy Interface
+* Free to design/develop as you want the Security Authentication solution
+
+.Example
+[source]
+----
+public class ShiroSecurityPolicy implements AuthorizationPolicy {
+
+    public Processor wrap(RouteContext routeContext, final Processor processor) {
+        return new ShiroSecurityProcessor(processor, this);
+    }
+    ...
+    @Override
+    public boolean process(Exchange exchange, AsyncCallback callback) {
+        try {
+            applySecurityPolicy(exchange);
+----
 
 // ************** security - rest ************
 [#security-endpoint-code-cxf]
 == Endpoint
 
-* Apache CXF - Interceptor
+- Goal : Intercept the HTTP Request and extract the required info to authenticate the user
+- How : Using the ContainerRequestFilter JAXRS Interface implemented as CXF Intercept
+
+.Example
+[source]
+----
+@Provider
+@PreMatching
+public class SecurityRequestFilter implements ContainerRequestFilter {
+
+@Override
+    public void filter(final ContainerRequestContext requestContext)
+                throws IOException {
+...
+----
 
 // ************** transition page ************
 [#transition4, data-background-color="#F8F8F8"]
@@ -151,13 +211,50 @@ image::{revealjs_conference_logo}[]
 == Jetty Example
 
 * Jetty /Netty Code
+* Concept : Combine User role(s) with Resource Access Paths
+* Goal : restrict or allow access to resources
+* Implementation : web container or component specific
+* Operation is sometimes supported (GET, POST, PUT, ...)
+* How: URL requested matched with one the rule(s)
+
+.Example
+[source]
+----
+Constraint constraint = new Constraint();
+constraint.setRoles(new String[] { "user", "admin" });
+
+ConstraintMapping mapping = new ConstraintMapping();
+mapping.setPathSpec("/say/hello/*");
+mapping.setMethod("GET");
+mapping.setConstraint(constraint);
+----
 
 // ************** security - rest ************
 [#security-handler-role]
 == With @Roles
 
-* Add name of the interceptor
-* What can we handle
+- Allow/Deny Access to resources
+- Annotations supported :
+* @PermitAll, @DenyAll, @RolesAllowed
+- @RolesAllowed
+* List of roles permitted to access method(s) in an application
+- Delegate responsibility to JAXRS Framework
+
+.Example
+[source]
+----
+@Path("projects")
+@Produces("application/json")
+public class ProjectsResource {
+
+    @POST
+    @RolesAllowed("manager")
+    public Project createProject(final Project project) { ... }
+
+    @GET
+    @Path("{id}")
+    public Project getProject(@PathParam("id") final Long id) { ... }
+----
 
 // ************** transition page ************
 [#transition5, data-background-color="#F8F8F8"]
@@ -194,19 +291,99 @@ image::{revealjs_conference_logo}[]
 [#security-apiman-1]
 == Api Man
 
-* Include slides about course
+* Goal : Externalize/Delegate security endpoint to an Api
+* How : Api acts as a Proxy/Gateway matching :
+- Incoming request against 1 {icon-arrow-right} Many policies
+- Deliver request to a target endpoint if validation succeeds
 
 // ************** security - rest ************
 [#security-apiman-2]
-== Api Man
+== Api Man - Plugin
 
-* Include slides about course
+* Goal : Setup an Api using the Basic Auth Plugin
+* How :
+- Create a versioned Api for an Organisation
+- Define the target endpoint using REST or SOAP
+- Associate a Policy using the Basic Auth Plugin
+
+* Supports http(s) connection with
+- User/password, LDAP, JDBC
+
+.Example
+[source]
+----
+  "contracts" : [
+    {
+      "apiOrgId" : "Policy_BasicAuthStatic",
+      "apiId" : "echo",
+      "apiVersion" : "1.0.0",
+      "policies" : [
+        {
+          "policyImpl" : "class:io.apiman.gateway.engine.policies.BasicAuthenticationPolicy",
+          "policyJsonConfig" : "{ \"realm\" : \"Test\", \"forwardIdentityHttpHeader\" : \"X-Authenticated-Identity\", \"staticIdentity\" : { \"identities\" : [ { \"username\" : \"bwayne\", \"password\" : \"bwayne\" } ] }  }"
+        }
+      ]
+    }
+  ]
+----
 
 // ************** security - rest ************
 [#security-apiman-3]
-== Api Man
+== Api Man - OpenId connect
 
-* Include slides about course
+* Goal : Authenticate a user using a Identity provider to get a token used for SSO purposes
+* Authentication between Client and Identity Provider: public, secret or PKI
+* JSon Web Token :
+- Compact token format,
+- Encode claims to be transmitted,
+- Base64url encoded and digitally signed and/or encrypted
+
+Example
+[source]
+----
+{
+  "jti": "af68fac6-fd50-4b73-bd37-5c555a8e561e",
+  "exp": 1442847825,
+  "nbf": 0,
+  "iat": 1442847525,
+  "iss": "http://localhost:8080/auth/realms/fuse",
+  "aud": "fuse",
+  "sub": "3591e417-7c60-4464-8714-96190c7fad92",
+  "azp": "fuse",
+  "session_state": "f58d5dfc-6e4c-4ad2-bd2f-70713f6b942d",
+  "client_session": "f06b673f-ecbe-47f2-ba76-b6a5901d5afe",
+  "allowed-origins": [],
+  "resource_access": {
+    "account": {
+      "roles": [
+        "manage-account",
+        "view-profile"
+      ]
+    }
+  },
+  "name": "admin ",
+  "preferred_username": "admin",
+  "given_name": "admin"
+}
+----
+
+// ************** security - rest ************
+[#security-apiman-3]
+== Api Man - Role Mapping
+
+- Goal : Restrict/allow access to an application based on an Authorization Rule
+- Should be combined with Keycloak Plugin
+- How : Define a collection of Authorization rules as such
+
+|===
+|Path |Verb |Role required
+|.* |PUT |Writer
+|.* |GET |Reader
+|===
+
+ifdef::showscript[]
+[.notes]
+****
 
 // ************** transition page ************
 [#transition7, data-background-color="#F8F8F8"]
@@ -222,8 +399,9 @@ image::{revealjs_conference_logo}[]
 [#security-pro-con-external]
 == Pros - Cons
 
-* Centralized player
+* Centralized governance policy configuration
 * Loose coupling
+* Tracking of APIs and consumers of those APIs
 * Gathering statistics/metrics
 * Service Discovery
 * Simplify security audit
