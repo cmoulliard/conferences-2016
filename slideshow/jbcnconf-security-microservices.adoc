@@ -1,4 +1,3 @@
-:footer_copyright: Copyright ©2015 Red Hat, Inc.
 :imagesdir: images/
 :speaker: Charles Moulliard (@cmoulliard)
 :speaker-title: Committer, Coder, Architect
@@ -12,8 +11,8 @@
 [#cover,data-background-color="#F8F8F8"]
 == {blank-space}
 
-[#block,left="700px",top="230px"]
-image:snowcamp/logo.png[width="95%"]
+[#block,left="700px",top="300px"]
+image:jbcnconf/duke.png[width="98%"]
 
 [#cover-h1,width="600px",left="0px",top="180px"]
 {talk-name}
@@ -42,10 +41,11 @@ image:snowcamp/logo.png[width="95%"]
 [#agenda]
 == Agenda
 
-* Integration ...
-* Apache Camel
-* Micro Container
-* Kubernetes Service
+* RESTfull Security
+* JAAS & Constraints
+* Interceptor
+* Policy
+* APi Man
 
 // ************** transition page ************
 [#transition1, data-background-color="#F8F8F8"]
@@ -55,15 +55,62 @@ image:snowcamp/logo.png[width="95%"]
 image::{revealjs_conference_logo}[]
 
 [#cover-h1,width="600px",left="0px",top="400px"]
-*Integration*
+*RESTfull Security*
 
-// ************** integration ************
-[#integration]
-== Point to Point vision
+// ************** security - rest ************
+[#security-rest-1]
+== Rest Security
 
 image:integration.png[]
 
 Integrate many systems. Play with formats & protocols
+
+// ************** security - rest ************
+[#security-rest-2]
+== Rest Security
+
+* Item 1
+* Item 2
+
+// ************** transition page ************
+[#transition2, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*JAAS & Constraints*
+
+// ************** transition page ************
+[#transition3, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Interceptor*
+
+// ************** transition page ************
+[#transition4, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Policy*
+
+// ************** transition page ************
+[#transition5, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Api Man*
 
 // *********************************
 [#questions]
