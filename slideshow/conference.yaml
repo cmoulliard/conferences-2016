@@ -59,7 +59,6 @@ attributes:
   revealjs_transition: none # default/cube/page/concave/zoom/linear/fade/none
   revealjs_display_slidenumber: true
   revealjs_history: true
-  revealjs_conference_logo: snowcamp/logo.png
   revealjs_scrollbar: true
   revealjs_footer_copyright: # Copyright ©2015 Red Hat, Inc.
   revealjs_slideshow: false

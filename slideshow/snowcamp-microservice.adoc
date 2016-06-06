@@ -1,5 +1,6 @@
 :footer_copyright: Copyright ©2015 Red Hat, Inc.
 :imagesdir: images/
+:revealjs_conference_logo: snowcamp/logo.png
 :speaker: Charles Moulliard (@cmoulliard)
 :speaker-title: Committer, Coder, Architect
 :speaker-email: cmoulliard@redhat.com

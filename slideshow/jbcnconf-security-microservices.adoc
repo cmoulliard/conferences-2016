@@ -1,4 +1,5 @@
 :imagesdir: images/
+:revealjs_conference_logo: jbcnconf/duke.png
 :speaker: Charles Moulliard (@cmoulliard)
 :speaker-title: Committer, Coder, Architect
 :speaker-email: cmoulliard@redhat.com
@@ -12,7 +13,7 @@
 == {blank-space}
 
 [#block,left="700px",top="300px"]
-image:jbcnconf/duke.png[width="98%"]
+image:{revealjs_conference_logo}[width="98%"]
 
 [#cover-h1,width="600px",left="0px",top="180px"]
 {talk-name}
@@ -27,7 +28,7 @@ image:jbcnconf/duke.png[width="98%"]
 
 * {speaker-title}
 
-* Work on Apache Camel, Karaf, Fabric8, Hawtio, Apiman, DeltaSpike
+* Work on Apache Camel, Karaf, Fabric8, Hawtio, Apiman, Drools
 
 * Mountain Biker, Belgian Beer Fan
 
@@ -41,11 +42,10 @@ image:jbcnconf/duke.png[width="98%"]
 [#agenda]
 == Agenda
 
-* RESTfull Security
-* JAAS & Constraints
-* Interceptor
-* Policy
-* APi Man
+* RESTfull Use case
+* Security "Aspect"
+* External player
+* Demo
 
 // ************** transition page ************
 [#transition1, data-background-color="#F8F8F8"]
@@ -55,22 +55,17 @@ image:jbcnconf/duke.png[width="98%"]
 image::{revealjs_conference_logo}[]
 
 [#cover-h1,width="600px",left="0px",top="400px"]
-*RESTfull Security*
+*Use case description*
 
 // ************** security - rest ************
-[#security-rest-1]
-== Rest Security
+[#security-uc]
+== Use case
 
-image:integration.png[]
+* Include picture about use case
+* Camel CXF endpoint exposing a Service
+* Security based on HTTP Basic Auth + Role + Path
 
-Integrate many systems. Play with formats & protocols
-
-// ************** security - rest ************
-[#security-rest-2]
-== Rest Security
-
-* Item 1
-* Item 2
+image:security/security-logo.jpg[]
 
 // ************** transition page ************
 [#transition2, data-background-color="#F8F8F8"]
@@ -79,8 +74,20 @@ Integrate many systems. Play with formats & protocols
 [#block,width="200px",left="70px",top="0px"]
 image::{revealjs_conference_logo}[]
 
-[#cover-h1,width="600px",left="0px",top="400px"]
-*JAAS & Constraints*
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Security +Aspect+*
+
+// ************** security - rest ************
+[#security-global]
+== Approaches
+
+* REST endpoint
+* Security "Aspect" {icon-arrow-right} 3 levels
+** Endpoint : Framework/Policy/Interceptor
+** HTTP Web Container : Handler & Constraints
+** Externally : Api Manager
+
+image:security/security-logo.jpg[]
 
 // ************** transition page ************
 [#transition3, data-background-color="#F8F8F8"]
@@ -89,8 +96,18 @@ image::{revealjs_conference_logo}[]
 [#block,width="200px",left="70px",top="0px"]
 image::{revealjs_conference_logo}[]
 
-[#cover-h1,width="600px",left="0px",top="400px"]
-*Interceptor*
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Endpoint Level*
+
+// ************** security - rest ************
+[#security-endpoint]
+== Endpoint
+
+* Spec driven : @Roles
+* Framework based : Apache Shiro, Spring Security
+* Interceptor/Policy : Camel, CXF
+
+image:security/security-logo.jpg[]
 
 // ************** transition page ************
 [#transition4, data-background-color="#F8F8F8"]
@@ -99,8 +116,18 @@ image::{revealjs_conference_logo}[]
 [#block,width="200px",left="70px",top="0px"]
 image::{revealjs_conference_logo}[]
 
-[#cover-h1,width="600px",left="0px",top="400px"]
-*Policy*
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Web HTTP Container*
+
+// ************** security - rest ************
+[#security-handler]
+== HTTP Handler
+
+* Apply Constraints on the Web Resources path
+* JAAS designed
+* Combined with Roles
+
+image:security/security-logo.jpg[]
 
 // ************** transition page ************
 [#transition5, data-background-color="#F8F8F8"]
@@ -109,8 +136,69 @@ image::{revealjs_conference_logo}[]
 [#block,width="200px",left="70px",top="0px"]
 image::{revealjs_conference_logo}[]
 
-[#cover-h1,width="600px",left="0px",top="400px"]
-*Api Man*
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Pros / Cons*
+
+// ************** security - rest ************
+[#security-pro-con]
+== Pros - Cons
+
+*
+
+// ************** transition page ************
+[#transition6, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*External Player*
+
+// ************** security - rest ************
+[#security-apiman-1]
+== Api Man
+
+* Include slides about course
+
+// ************** security - rest ************
+[#security-apiman-2]
+== Api Man
+
+* Include slides about course
+
+// ************** security - rest ************
+[#security-apiman-3]
+== Api Man
+
+* Include slides about course
+
+// ************** transition page ************
+[#transition7, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Pros / Cons*
+
+// ************** security - rest ************
+[#security-pro-con-external]
+== Pros - Cons
+
+*
+
+
+// ************** transition page ************
+[#transition7, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Demo*
 
 // *********************************
 [#questions]
