@@ -43,8 +43,11 @@ image:{revealjs_conference_logo}[width="98%"]
 == Agenda
 
 * RESTfull Use case
+
 * Security "Aspect"
+
 * External player
+
 * Demo
 
 // ************** transition page ************
@@ -99,6 +102,9 @@ image::{revealjs_conference_logo}[]
 [#cover-h1,width="600px",left="0px",top="300px"]
 *Endpoint Level*
 
+[#block,width="400px",left="170px",top="500px"]
+image::security/rustylock.png[]
+
 // ************** security - rest ************
 [#security-endpoint]
 == Endpoint
@@ -107,7 +113,20 @@ image::{revealjs_conference_logo}[]
 * Framework based : Apache Shiro, Spring Security
 * Interceptor/Policy : Camel, CXF
 
-image:security/security-logo.jpg[]
+image:security/apache_shiro_logo.png[]
+image:security/spring_security.png[]
+
+// ************** security - rest ************
+[#security-endpoint-code-camel]
+== Endpoint
+
+* Apache Camel Policy
+
+// ************** security - rest ************
+[#security-endpoint-code-cxf]
+== Endpoint
+
+* Apache CXF - Interceptor
 
 // ************** transition page ************
 [#transition4, data-background-color="#F8F8F8"]
@@ -127,7 +146,18 @@ image::{revealjs_conference_logo}[]
 * JAAS designed
 * Combined with Roles
 
-image:security/security-logo.jpg[]
+// ************** security - rest ************
+[#security-handler-code]
+== Jetty Example
+
+* Jetty /Netty Code
+
+// ************** security - rest ************
+[#security-handler-role]
+== With @Roles
+
+* Add name of the interceptor
+* What can we handle
 
 // ************** transition page ************
 [#transition5, data-background-color="#F8F8F8"]
@@ -143,7 +173,12 @@ image::{revealjs_conference_logo}[]
 [#security-pro-con]
 == Pros - Cons
 
-*
+* No product lock
+* Great flexibility
+* Spec managed
+* Intrusive
+* Low Management Capability
+* Difficulty to centralize
 
 // ************** transition page ************
 [#transition6, data-background-color="#F8F8F8"]
@@ -187,8 +222,14 @@ image::{revealjs_conference_logo}[]
 [#security-pro-con-external]
 == Pros - Cons
 
-*
-
+* Centralized player
+* Loose coupling
+* Gathering statistics/metrics
+* Service Discovery
+* Simplify security audit
+* Performance
+* New Architecture Brick
+* Features = plugins available {icon-exclamation-mark}
 
 // ************** transition page ************
 [#transition7, data-background-color="#F8F8F8"]
