@@ -64,13 +64,13 @@ image::{revealjs_conference_logo}[]
 [#security-uc]
 == Use case
 
-* Include picture about use case
 * Camel CXF endpoint exposing a Service
-* Security based on HTTP Basic Auth + Role + Path
+
+image:security/rest-1.png[width=95%]
 
 // ************** security - rest ************
 [#security-uc-code]
-== REST Endpoint
+== REST Api
 
 [source,java]
 ----
@@ -134,8 +134,14 @@ image::{revealjs_conference_logo}[]
 image::security/rustylock.png[]
 
 // ************** security - rest ************
+[#security-endpoint-level]
+== Endpoint level
+
+image:security/rest-2.png[width=95%]
+
+// ************** security - rest ************
 [#security-endpoint]
-== Endpoint
+== Intercept
 
 * Spec driven : @Roles
 * Framework based : Apache Shiro, Spring Security
@@ -197,6 +203,12 @@ image::{revealjs_conference_logo}[]
 
 [#cover-h1,width="600px",left="0px",top="300px"]
 *Web HTTP Container*
+
+// ************** security - rest ************
+[#security-container-level]
+== Web container level
+
+image:security/rest-3.png[width=95%]
 
 // ************** security - rest ************
 [#security-handler]
@@ -286,6 +298,12 @@ image::{revealjs_conference_logo}[]
 
 [#cover-h1,width="600px",left="0px",top="300px"]
 *External Player*
+
+// ************** security - rest ************
+[#security-endpoint-externe]
+== External level
+
+image:security/rest-4.png[width=95%]
 
 // ************** security - rest ************
 [#security-apiman-1]
@@ -381,10 +399,6 @@ Example
 |.* |GET |Reader
 |===
 
-ifdef::showscript[]
-[.notes]
-****
-
 // ************** transition page ************
 [#transition7, data-background-color="#F8F8F8"]
 == {blank-space}
@@ -409,8 +423,14 @@ image::{revealjs_conference_logo}[]
 * New Architecture Brick
 * Features = plugins available {icon-exclamation-mark}
 
+// ************** security - rest ************
+[#security-micro]
+== Microservices
+
+image:security/rest-5.png[width=95%]
+
 // ************** transition page ************
-[#transition7, data-background-color="#F8F8F8"]
+[#transition8, data-background-color="#F8F8F8"]
 == {blank-space}
 
 [#block,width="200px",left="70px",top="0px"]
