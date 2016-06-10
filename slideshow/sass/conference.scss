@@ -427,14 +427,6 @@ li strong {
   font-weight: bold;
 }
 
-/**************************************************************
- * Override Revealjs Pre class
- * Mar 04 2015, CHM : Change width from 90% to 100% and margin to reduce size of the box hightlighted
- *************************************************************/
-.reveal pre {
-  width: 100%;
-}
-
 .listingblock .content {
   margin-right: 50px;
   padding-right: 50px;
@@ -585,8 +577,14 @@ ol.lowergreek {
   font-size: 28px;
 }
 
+/**************************************************************
+ * Override Revealjs Pre class
+ * Mar 04 2015, CHM : Change width from 90% to 100% and margin to reduce size of the box hightlighted
+ *************************************************************/
 .reveal pre {
-  font-size: 0.55em;
+  font-size: $revealjs-pre-font-size;
+  width: 115%;
+  height: 115%;
 }
 
 .reveal .listingblock {
