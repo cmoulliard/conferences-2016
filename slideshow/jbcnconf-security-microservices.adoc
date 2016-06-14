@@ -359,14 +359,16 @@ image:security/rest-5.png[width=95%]
 [#security-apiman-3]
 == Api Man - OpenId connect
 
-* Goal : Authenticate a user using a Identity provider to get a token used for SSO purposes
+* Goal : Authenticate a user using an *Identity provider* to get a *token* used for SSO purposes
 * Authentication between Client and Identity Provider: public, secret or PKI
-* JSon Web Token :
+* *JSon Web Token* :
 - Compact token format,
 - Encode claims to be transmitted,
 - Base64url encoded and digitally signed and/or encrypted
 
-Example
+[#security-apiman-4]
+== OpenId connect - Example
+
 [source]
 ----
 {
@@ -396,11 +398,10 @@ Example
 ----
 
 // ************** security - rest ************
-[#security-apiman-3]
-== Api Man - Role Mapping
+[#security-apiman-5]
+== Role Mapping
 
 - Goal : Restrict/allow access to an application based on an Authorization Rule
-- Should be combined with Keycloak Plugin
 - How : Define a collection of Authorization rules as such
 
 |===
@@ -408,6 +409,8 @@ Example
 |.* |PUT |Writer
 |.* |GET |Reader
 |===
+
+- Combined with Auth Plugin (Keycloak, Basic, ...)
 
 // ************** transition page ************
 [#transition7, data-background-color="#F8F8F8"]
@@ -421,23 +424,26 @@ image::{revealjs_conference_logo}[]
 
 // ************** security - rest ************
 [#security-pro-con-external]
-== Pros - Cons
+== Conclusions
 
-* Centralized governance policy configuration
-* Loose coupling
-* Tracking of APIs and consumers of those APIs
-* Gathering statistics/metrics
-* Service Discovery
-* Simplify security audit
-* Performance
-* New Architecture Brick
-* Features = plugins available {icon-exclamation-mark}
+* Pros
+** Centralized governance policy configuration
+** Loose coupling
+** Tracking of APIs and consumers of those APIs
+** Gathering statistics/metrics
+** Service Discovery
+** Simplify security audit
+
+* Cons
+** Performance
+** New Architecture Brick
+** Features = plugins available {icon-exclamation-mark}
 
 // ************** security - rest ************
 [#security-micro]
 == Microservices
 
-image:security/rest-5.png[width=95%]
+image:security/rest-6.png[width=95%]
 
 // ************** transition page ************
 [#transition8, data-background-color="#F8F8F8"]
