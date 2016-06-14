@@ -1,0 +1,69 @@
+
+# Keycloak
+
+
+# Generate keys for localhost and IP address
+
+keytool -genkey -alias localhost -keyalg RSA -keystore keycloak.jks -validity 10950
+keytool -genkey -alias 192.168.1.80 -keyalg RSA -keystore keycloak.jks -validity 10950
+
+Example
+
+keytool -genkey -alias 192.168.1.80 -keyalg RSA -keystore keycloak.jks -validity 10950
+Enter keystore password:
+What is your first and last name?
+  [Unknown]:  192.168.1.80
+What is the name of your organizational unit?
+  [Unknown]:  Keycloak
+What is the name of your organization?
+  [Unknown]:  Red Hat
+What is the name of your City or Locality?
+  [Unknown]:  Florennes
+What is the name of your State or Province?
+  [Unknown]:  Namur
+What is the two-letter country code for this unit?
+  [Unknown]:  BE
+Is CN=192.168.1.80, OU=Keycloak, O=Red Hat, L=Florennes, ST=Namur, C=BE correct?
+  [no]:  yes
+
+Enter key password for <192.168.1.80>
+	(RETURN if same as keystore password):
+
+# Check keys and alias
+
+keytool -list -v -keystore keycloak.jks
+
+# Copy keys to Keycloak Server
+
+cp keycloak.jks keycloak-1.9.7.Final/standalone/configuration/keycloak.jks
+
+# Start Keycloak
+
+./keycloak-1.9.7.Final/bin/standalone.sh -b 0.0.0.0
+
+# CXF CDI
+
+CXF Service : http://cdi-cxf-demo.vagrant.f8/cxfcdi
+
+# Requests
+
+http --verify=no -a demo:demoooo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123
+http --verify=no -a demo:demo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123
+http --verify=no https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/2.0/customerservice/customers/123
+
+
+************
+
+# DNS issue
+
+vi /etc/resolv.conf
+nameserver 8.8.4.4
+nameserver 8.8.8.8
+
+vi /etc/hosts
+127.0.0.1   apiman-gateway.vagrant.f8 vagrant.f8 vagrant localhost localhost.localdomain localhost4 localhost4.localdomain4
+
+service docker restart
+systemctl start openshift.service
+
+
