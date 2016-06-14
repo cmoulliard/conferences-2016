@@ -41,6 +41,11 @@ cp keycloak.jks keycloak-1.9.7.Final/standalone/configuration/keycloak.jks
 
 ./keycloak-1.9.7.Final/bin/standalone.sh -b 0.0.0.0
 
+# Build ipaas
+
+export DOCKER_HOST=tcp://172.28.128.4:2375
+export KUBERNETES_DOMAIN=vagrant.f8
+
 # CXF CDI
 
 CXF Service : http://cdi-cxf-demo.vagrant.f8/cxfcdi
