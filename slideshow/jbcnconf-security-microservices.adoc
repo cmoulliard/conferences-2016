@@ -256,14 +256,10 @@ mapping.setConstraint(constraint);
 
 // ************** security - rest ************
 [#security-handler-role]
-== With @Roles
+== JAXRS @Roles
 
-- Allow/Deny Access to resources
-- Annotations supported :
-* @PermitAll, @DenyAll, @RolesAllowed
-- @RolesAllowed
-* List of roles permitted to access method(s) in an application
-- Delegate responsibility to JAXRS Framework
+- Goal {icon-arrow-right} Allow/Deny Access to resources
+- How {icon-arrow-right} using annotation @RolesAllowed
 
 .Example
 [source]
@@ -299,14 +295,17 @@ image::{revealjs_conference_logo}[]
 
 // ************** security - rest ************
 [#security-pro-con]
-== Pros - Cons
+== Conclusions
 
-* No product lock
-* Great flexibility
-* Spec managed
-* Intrusive
-* Low Management Capability
-* Difficulty to centralize
+* Pros
+** No product lock
+** Great flexibility
+** Spec managed
+
+* Cons
+** Intrusive
+** Low Management Capability
+** Lack of Governance
 
 // ************** transition page ************
 [#transition6, data-background-color="#F8F8F8"]
@@ -322,31 +321,23 @@ image::{revealjs_conference_logo}[]
 [#security-endpoint-externe]
 == Api Manager
 
-image:security/rest-4.png[width=95%]
+image:security/rest-5.png[width=95%]
 
 // ************** security - rest ************
 [#security-apiman-1]
 == Api Man
 
-* Goal : Externalize/Delegate security endpoint to an Api
-* How : Api acts as a Proxy/Gateway matching :
-- Incoming request against 1 {icon-arrow-right} Many policies
-- Deliver request to a target endpoint if validation succeeds
+* Goal {icon-arrow-right} Externalize/Delegate security endpoint to *Api*
+* How {icon-arrow-right} Api acts as a *Proxy/Gateway* matching :
+- Incoming request against 1 {icon-arrow-right} Many policies &
+  Delivery requests to *target* endpoint if validation succeeds
 
 // ************** security - rest ************
 [#security-apiman-2]
-== Api Man - Plugin
+== Api Man - Basic Auth
 
-* Goal : Setup an Api using the Basic Auth Plugin
-* How :
-- Create a versioned Api for an Organisation
-- Define the target endpoint using REST or SOAP
-- Associate a Policy using the Basic Auth Plugin
+* How : Associate a *Policy* using the Basic Auth Plugin to an endpoint
 
-* Supports http(s) connection with
-- User/password, LDAP, JDBC
-
-.Example
 [source]
 ----
   "contracts" : [
