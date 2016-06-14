@@ -359,7 +359,7 @@ image:security/rest-5.png[width=95%]
 [#security-apiman-3]
 == Api Man - OpenId connect
 
-* Goal : Authenticate a user using an *Identity provider* to get a *token* used for SSO purposes
+* Goal {icon-arrow-right} Authenticate a user using an *Identity provider* to get a *token* used for SSO purposes
 * Authentication between Client and Identity Provider: public, secret or PKI
 * *JSon Web Token* :
 - Compact token format,
@@ -383,17 +383,14 @@ image:security/rest-5.png[width=95%]
   "session_state": "f58d5dfc-6e4c-4ad2-bd2f-70713f6b942d",
   "client_session": "f06b673f-ecbe-47f2-ba76-b6a5901d5afe",
   "allowed-origins": [],
-  "resource_access": {
-    "account": {
-      "roles": [
-        "manage-account",
-        "view-profile"
-      ]
-    }
+  "realm_access": {
+    "roles": [
+      "write"
+    ]
   },
-  "name": "admin ",
-  "preferred_username": "admin",
-  "given_name": "admin"
+  "name": "writer ",
+  "preferred_username": "writer",
+  "given_name": "writer"
 }
 ----
 
@@ -401,16 +398,18 @@ image:security/rest-5.png[width=95%]
 [#security-apiman-5]
 == Role Mapping
 
-- Goal : Restrict/allow access to an application based on an Authorization Rule
-- How : Define a collection of Authorization rules as such
+- Goal {icon-arrow-right} Restrict/allow access to an application based on an Authorization Rule
+- How {icon-arrow-right} Define a collection of Authorization rules as such
+  & Combined with Auth Plugin (Keycloak, Basic, ...)
 
+{blanck-space}
+
+[.noredheader]
 |===
 |Path |Verb |Role required
 |.* |PUT |Writer
 |.* |GET |Reader
 |===
-
-- Combined with Auth Plugin (Keycloak, Basic, ...)
 
 // ************** transition page ************
 [#transition7, data-background-color="#F8F8F8"]

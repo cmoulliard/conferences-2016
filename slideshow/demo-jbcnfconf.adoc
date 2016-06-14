@@ -41,10 +41,13 @@ cp keycloak.jks keycloak-1.9.7.Final/standalone/configuration/keycloak.jks
 
 ./keycloak-1.9.7.Final/bin/standalone.sh -b 0.0.0.0
 
-# Build ipaas
+# Build iPaas
 
 export DOCKER_HOST=tcp://172.28.128.4:2375
 export KUBERNETES_DOMAIN=vagrant.f8
+oc login https://172.28.128.4:8443
+
+mvn -Pssl -Pf8-local-deploy
 
 # CXF CDI
 
@@ -52,9 +55,21 @@ CXF Service : http://cdi-cxf-demo.vagrant.f8/cxfcdi
 
 # Requests
 
-http --verify=no -a demo:demoooo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123
-http --verify=no -a demo:demo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123
 http --verify=no https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/2.0/customerservice/customers/123
+
+http --verify=no -a demo:demoooo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123
+
+http --verify=no -a demo:demo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123
+
+curl -sk https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/2.0/customerservice/customers/123 | xmllint --format - | pygmentize -l xml
+curl -sk -u demo:demooo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123 | prettyjson
+curl -sk -u demo:demo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123 | xmllint --format - | pygmentize -l xml
+
+./scripts/getToken.sh
+
+Formating
+
+curl -s  http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers/123 | xmllint --format -
 
 
 ************
