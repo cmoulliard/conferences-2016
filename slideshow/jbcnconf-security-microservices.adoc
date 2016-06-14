@@ -44,9 +44,11 @@ image:{revealjs_conference_logo}[width="98%"]
 
 * RESTfull Use case
 
-* Security "Aspect"
+* How to Secure the Endpoint
 
-* External player
+** Policy
+** Web Container
+** Api Management
 
 * Demo
 
@@ -57,20 +59,18 @@ image:{revealjs_conference_logo}[width="98%"]
 [#block,width="200px",left="70px",top="0px"]
 image::{revealjs_conference_logo}[]
 
-[#cover-h1,width="600px",left="0px",top="400px"]
+[#cover-h1,width="600px",left="0px",top="350px"]
 *Use case description*
 
 // ************** security - rest ************
 [#security-uc]
 == Use case
 
-* Camel CXF endpoint exposing a Service
-
 image:security/rest-1.png[width=95%]
 
 // ************** security - rest ************
 [#security-uc-code]
-== REST Api
+== REST Service
 
 [source,java]
 ----
@@ -91,16 +91,14 @@ public Customer getCustomer(@ApiParam(value = "ID of Customer to fetch",
     LOG.info("Invoking getCustomer, Customer id is: {}", id);
 
     long idNumber = Long.parseLong(id);
-
     Customer c = customers.get(idNumber);
-
     return c;
 }
 ----
 
 // ************** security - rest ************
 [#security-uc-services]
-== Services
+== Api documented : Swagger
 
 image:security/swagger-service.png[width=95%]
 
@@ -112,20 +110,21 @@ image:security/swagger-service.png[width=95%]
 image::{revealjs_conference_logo}[]
 
 [#cover-h1,width="600px",left="0px",top="300px"]
-*Security +Aspect+*
-
-image:security/security-logo.jpg[]
+*How to Secure ?*
 
 // ************** security - rest ************
 [#security-global]
-== Approaches
+== Level !
 
-* Security "Aspect" {icon-arrow-right} 3 levels
-** Endpoint : Framework/Policy/Interceptor
-** HTTP Web Container : Handler & Constraints
-** Externally : Api Manager
+* Endpoint {icon-arrow-right} Framework/Policy/Interceptor
 
-image:security/security-logo.jpg[]
+{blank-space}
+
+* HTTP Web Container {icon-arrow-right} Handler & Constraints
+
+{blank-space}
+
+* Externally {icon-arrow-right} Api Manager
 
 // ************** transition page ************
 [#transition3, data-background-color="#F8F8F8"]
@@ -137,9 +136,6 @@ image::{revealjs_conference_logo}[]
 [#cover-h1,width="600px",left="0px",top="300px"]
 *Endpoint Level*
 
-[#block,width="400px",left="170px",top="500px"]
-image::security/rustylock.png[]
-
 // ************** security - rest ************
 [#security-endpoint-level]
 == Endpoint level
@@ -150,23 +146,27 @@ image:security/rest-3.png[width=95%]
 [#security-endpoint]
 == Intercept
 
-* Spec driven : @Roles
-* Framework based : Apache Shiro, Spring Security
-* Interceptor/Policy : Camel, CXF
+* Framework based    : Apache Shiro, Spring Security
 
 image:security/apache_shiro_logo.png[]
 image:security/spring_security.png[]
 
+* Interceptor/Policy : Apache Camel, Apache CXF
+
+image:camel/apache-camel.png[]
+
+* JAXRS              : @Roles
+
 // ************** security - rest ************
 [#security-endpoint-code-camel]
-== Endpoint
+== Camel Endpoint
 
-* Goal : Extract from the HTTP request the info needed to authenticate a user
-* How : Use a Camel Policy to wrap the Route / Pipeline with a new processor
-* Camel Authorization Policy extends the Policy Interface
-* Free to design/develop as you want the Security Authentication solution
+* Goal {icon-arrow-right} *Extract* from the HTTP request the info needed to authenticate a user
+* How  {icon-arrow-right} Use a Camel Policy to *wrap* the Route / Pipeline with a new processor
 
-.Example
+{blank-space}
+
+.Camel Example
 [source]
 ----
 public class ShiroSecurityPolicy implements AuthorizationPolicy {
@@ -183,12 +183,14 @@ public class ShiroSecurityPolicy implements AuthorizationPolicy {
 
 // ************** security - rest ************
 [#security-endpoint-code-cxf]
-== Endpoint
+== CXF Endpoint
 
-- Goal : Intercept the HTTP Request and extract the required info to authenticate the user
-- How : Using the ContainerRequestFilter JAXRS Interface implemented as CXF Intercept
+- How {icon-arrow-right} Using the *ContainerRequestFilter* JAXRS Interface
+- Rely on CXF *Intercept*
 
-.Example
+{blank-space}
+
+.CXF Example
 [source]
 ----
 @Provider
@@ -221,20 +223,24 @@ image:security/rest-2.png[width=95%]
 [#security-handler]
 == HTTP Handler
 
-* Apply Constraints on the Web Resources path
-* JAAS designed
-* Combined with Roles
+- How {icon-arrow-right} Apply *Constraints* on Web Resources path(s)
+
+[source]
+----
+GET /rest/accountservice/account for User
+POST /webservices/customerservices/customer for Admin
+----
+
+- Designed using *JAAS* {icon-arrow-right} JDBC, LDAP, Properties
+
+- Could use *Roles*
 
 // ************** security - rest ************
 [#security-handler-code]
 == Jetty Example
 
-* Jetty /Netty Code
-* Concept : Combine User role(s) with Resource Access Paths
-* Goal : restrict or allow access to resources
-* Implementation : web container or component specific
-* Operation is sometimes supported (GET, POST, PUT, ...)
-* How: URL requested matched with one the rule(s)
+* Goal {icon-arrow-right} restrict or allow access to resources
+* How {icon-arrow-right} URL requested matched with one the rule(s)
 
 .Example
 [source]
@@ -275,6 +281,12 @@ public class ProjectsResource {
     public Project getProject(@PathParam("id") final Long id) { ... }
 ----
 
+// ************** security - rest ************
+[#security-combined-level]
+== Web Secured & Policy Level
+
+image:security/rest-4.png[width=95%]
+
 // ************** transition page ************
 [#transition5, data-background-color="#F8F8F8"]
 == {blank-space}
@@ -308,7 +320,7 @@ image::{revealjs_conference_logo}[]
 
 // ************** security - rest ************
 [#security-endpoint-externe]
-== External level
+== Api Manager
 
 image:security/rest-4.png[width=95%]
 
@@ -450,8 +462,8 @@ image::{revealjs_conference_logo}[]
 [#questions]
 == Questions
 
-[#block,top="200px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
+[#block,top="200px",left="590px"]
+image:{revealjs_conference_logo}[width="70%"]
 
 [.noredheader,cols="65,.<45"]
 |===
@@ -460,5 +472,4 @@ image:{revealjs_conference_logo}[width="80%"]
 a|* Twitter : *{speaker-twitter}*
 |===
 
-* Camel Rest MicroService in Action {icon-arrow-right} *https://github.com/FuseByExample/microservice-camel-in-action*
-* http://fabric8.io/
+* Apiman : *http://apiman.io*, Fabric8 : *http://fabric8.io*
