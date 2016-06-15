@@ -324,7 +324,7 @@ image::{revealjs_conference_logo}[]
 image:security/rest-5.png[width=95%]
 
 // ************** security - rest ************
-[#security-apiman-1]
+[#security-apiman]
 == Api Man
 
 * Goal {icon-arrow-right} Externalize/Delegate security endpoint to *Api*
@@ -333,7 +333,25 @@ image:security/rest-5.png[width=95%]
   Delivery requests to *target* endpoint if validation succeeds
 
 // ************** security - rest ************
-[#security-apiman-2]
+[#security-apiman-manager]
+== Manager
+
+image:microservice/apiman-1.png[]
+
+// ************** security - rest ************
+[#security-apiman-api]
+== Api
+
+image:microservice/apiman-2.png[]
+
+// ************** security - rest ************
+[#security-apiman-catalog]
+== Api
+
+image:microservice/apiman-3.png[]
+
+// ************** security - rest ************
+[#security-apiman-basic]
 == Api Man - Basic Auth
 
 * How : Associate a *Policy* using the Basic Auth Plugin to an endpoint
@@ -356,7 +374,7 @@ image:security/rest-5.png[width=95%]
 ----
 
 // ************** security - rest ************
-[#security-apiman-3]
+[#security-apiman-openid]
 == Api Man - OpenId connect
 
 * Goal {icon-arrow-right} Authenticate a user using an *Identity provider* to get a *token* used for SSO purposes
@@ -366,7 +384,7 @@ image:security/rest-5.png[width=95%]
 - Encode claims to be transmitted,
 - Base64url encoded and digitally signed and/or encrypted
 
-[#security-apiman-4]
+[#security-apiman-openid-example]
 == OpenId connect - Example
 
 [source]
@@ -395,7 +413,7 @@ image:security/rest-5.png[width=95%]
 ----
 
 // ************** security - rest ************
-[#security-apiman-5]
+[#security-apiman-rolemapping]
 == Role Mapping
 
 - Goal {icon-arrow-right} Restrict/allow access to an application based on an Authorization Rule
