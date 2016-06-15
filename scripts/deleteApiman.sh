@@ -12,8 +12,8 @@ if [ $? == 1 ]; then
   openshiftLogin
 fi
 
-# Delete pods, rc, services, secrets & routes
-oc delete pod,service,rc -l group=io.fabric8.ipaas.apps
+# Delete pods, rc, services, routes, secrets
+oc delete pod,service,rc -l 'project in (apiman,apiman-gateway,elasticsearch-v1)'
 oc delete route apiman apiman-gateway elasticsearch
 oc delete secret apiman-gateway-keystore apiman-keystore elasticsearch-v1-keystore
 
