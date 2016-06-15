@@ -71,19 +71,27 @@ Formating
 
 curl -s  http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers/123 | xmllint --format -
 
+# Mobile
 
-************
+1. Setup JBoss Fuse for the REST Services
 
-# DNS issue
+  shell:source mvn:org.jboss.fuse/deployment/1.0/script/install
+  fabric:container-list
 
-vi /etc/resolv.conf
-nameserver 8.8.4.4
-nameserver 8.8.8.8
+  cd /Users/chmoulli/Fuse/projects/fuse-by-examples/fuse-in-action/camel-restdsl-in-action
+  jvm 1.8
+  mvn clean install
+  cd routing
+  mvn fabric8:deploy
+  cd ..
 
-vi /etc/hosts
-127.0.0.1   apiman-gateway.vagrant.f8 vagrant.f8 vagrant localhost localhost.localdomain localhost4 localhost4.localdomain4
+  http PUT http://localhost:9200/blog
+  http PUT http://localhost:9200/blog/_mapping/article < data/elasticsearch/mapping.json
+  http http://localhost:9200/blog/_mapping/article
 
-service docker restart
-systemctl start openshift.service
+  fabric:profile-display gpe-fuse
+  fabric:container-add-profile demo gpe-fuse
+
+
 
 
