@@ -92,6 +92,26 @@ curl -s  http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers/123 
   fabric:profile-display gpe-fuse
   fabric:container-add-profile demo gpe-fuse
 
+2. Simple client project
 
+   rm -rf hooks/
+   rm -rf platforms/
+   rm -rf plugins/
+   rm -rf resources/
+   rm config.xml
+
+   mkdir hooks
+   chmod +x hooks
+
+   printf '\n<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<widget id="org.fuse.ionic.js" android-versionCode="23" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">\n<name>Fuse Ionic JS App</name>\n<description>Simple Feedhenry Ionic JS App</description>\n<content src="index.html"/>\n<access origin="*"/>\n<preference name="permissions" value="none"/>\n<preference name="fullscreen" value="true"/>\n<preference name="webviewbounce" value="true"/>\n<preference name="SplashScreen" value="screen"/>\n<preference name="SplashScreenDelay" value="3000"/>\n</widget>' | cat > config.xml
+
+   ionic platform add browser
+   ionic platform add ios
+
+   ionic build browser
+   ionic run browser
+
+   ionic build ios
+   ionic run ios
 
 
