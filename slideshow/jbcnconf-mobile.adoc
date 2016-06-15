@@ -60,7 +60,7 @@ image:{revealjs_conference_logo}[width="98%"]
 
 // ************** frameworks ********
 [#html5]
-== HTML5
+== What Hybrid means ?
 
 [#block,left="50px",top="200px"]
 image:web/html5.jpeg[200,200] {icon-plus} image:web/javascript.jpeg[200,200] {icon-plus} image:web/css3-logo.png[200,200]
@@ -90,9 +90,32 @@ image:mobile/ionic-logo.jpg[200,200] | image:mobile/ionicview.png[]
 |===
 
 // ************** frameworks ********
-[#ionicwidget]
+[#ionicframework]
+== JBoss Mobile Eclipse
+
+image:mobile/ionic-palette.png[]
+
+// ************** frameworks ********
+[#ionicwidgetlist]
 == Ionic List
 
+.View
+[source]
+----
+<ion-view view-title="Articles">
+  <ion-content>
+    <ion-list>
+        <ion-item ng-repeat="article in articles |
+                             orderBy:['user','title']"
+                             href="#/app/article/{{article.id}}">
+            {{article.title}}, posted {{article.postDate}}, by {{article.user}}
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+----
+
+.Controller
 [source]
 ----
 blog.controller('FindAllCtrl', function ($scope, fhcloud, articleService) {
@@ -105,36 +128,33 @@ blog.controller('FindAllCtrl', function ($scope, fhcloud, articleService) {
 });
 ----
 
-[source]
-----
-<ion-view view-title="Articles">
-  <ion-content>
-    <ion-list>
-        <ion-item ng-repeat="article in articles | orderBy:['user','title']" href="#/app/article/{{article.id}}">
-            {{article.title}}, posted {{article.postDate}}, by {{article.user}}
-        </ion-item>
-    </ion-list>
-  </ion-content>
-</ion-view>
-----
-
 // ************** frameworks ********
 [#cordova]
-== Apache Cordova
+== https://cordova.apache.org/docs/en/latest/[Apache Cordova]
 
 [.noredheader,cols="50,50"]
 |===
-a|* Web Based App wrapped into a native Shell
-* Access to native feature through
-  JS Bridge
-* Multiplatform
-
-image:mobile/cordova_bot.png[100,100] | image:mobile/cordova-plugins.jpg[400,400]
+a|* Web Based App *wrapped* into a native Shell
+* Access to *native* feature through
+  *WebView* & *Plugins*
+* Multiplatform : iOS, Android, Blackberry, MS Phone
+* Plugins : camera, geo, contacts, file | image:mobile/cordova-plugins.jpg[400,400]
 |===
+
+image:mobile/cordova_bot.png[100,100]
+
+// ************** frameworks ********
+[#cordova-architecture]
+== Architecture
+
+image:mobile/cordovaapparchitecture.png[700,700]
 
 // ************** tool ********
 [#cordova-tool]
 == Cordova Tooling
+
+* Install {icon-arrow-right} npm install -g cordova
+* Command line Tool to manage Hybrid Apps
 
 [source]
 ----
@@ -145,7 +165,10 @@ Create a Cordova project
     PATH ......................... Where to create the project
     ID ........................... reverse-domain-style package name - used in <widget id>
     NAME ......................... human readable field
+----
 
+[source]
+----
 cordova plugin <command> [options]
 
 Manage project plugins
@@ -154,6 +177,26 @@ Manage project plugins
                                                     pluginid will be matched in --searchpath / registry
                                                     directory is a directory containing a plugin
                                                     giturl is a git repo containing a plugin
+----
+
+// ************** tool ********
+[#cordova-tool-example]
+== Example
+
+[source]
+----
+cordova create myApp org.apache.cordova.myApp myApp
+cordova plugin add cordova-plugin-camera --save
+
+cordova platform add android --save
+cordova requirements android
+
+cordova build android --verbose
+
+cordova run android
+cordova build android --release --
+                      --keystore="..\android.keystore"
+                      --storePassword=android --alias=mykey
 ----
 
 // ************** tool ********
@@ -208,7 +251,18 @@ image:mobile-integration1.png[1000,1000]
 image:mobile-integration2.png[1000,1000]
 
 // ************** rest and backend access ********
-[#rest-backend-access]
+[#feedhenry-sdk]
+== Feedhenry SDK
+
+* Extend Cordova/Ionic JS Frameworks
+* Api to
+** Access Cloud Applications *$fh.Cloud()*
+** Push notifications *$fh.push()*
+** Auth User (OAuth) *$fh.auth()*
+** Sync data *$fh.sync()*
+
+// ************** rest and backend access ********
+[#feedhenry-cloud]
 == JS Front Service
 
 [source]
