@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+dir="$PWD"
+
+# Import util functions sch login
+. $dir/util.sh
+
+# Check if we are connected
+oc whoami > /dev/null
+if [ $? == 1 ]; then
+  echo "Not logged in. We will try to log ..."
+  openshiftLogin
+fi
+
+# Delete pods, rc, services, secrets & routes
+oc delete pod,service,rc -l group=io.fabric8.ipaas.apps
+oc delete route apiman apiman-gateway elasticsearch
+oc delete secret apiman-gateway-keystore apiman-keystore elasticsearch-v1-keystore
+
+
+
+
+
