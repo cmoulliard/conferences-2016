@@ -336,19 +336,19 @@ image:security/rest-5.png[width=95%]
 [#security-apiman-manager]
 == Manager
 
-image:microservice/apiman-1.png[]
+image:microservice/apiman-1.png[1000,1000]
 
 // ************** security - rest ************
 [#security-apiman-api]
 == Api
 
-image:microservice/apiman-2.png[]
+image:microservice/apiman-2.png[1000,1000]
 
 // ************** security - rest ************
 [#security-apiman-catalog]
 == Api
 
-image:microservice/apiman-3.png[]
+image:microservice/apiman-3.png[1000,1000]
 
 // ************** security - rest ************
 [#security-apiman-basic]
@@ -420,7 +420,7 @@ image:microservice/apiman-3.png[]
 - How {icon-arrow-right} Define a collection of Authorization rules as such
   & Combined with Auth Plugin (Keycloak, Basic, ...)
 
-{blanck-space}
+{blank-space}
 
 [.noredheader]
 |===
