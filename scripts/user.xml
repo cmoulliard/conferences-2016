@@ -1,0 +1,4 @@
+<Customer xmlns="http://cxfcdi.fabric.quickstarts.fabric8.io/">
+    <id>124</id>
+    <name>Charles</name>
+</Customer>

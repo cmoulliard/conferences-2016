@@ -51,19 +51,24 @@ mvn -Pssl -Pf8-local-deploy
 
 # CXF CDI
 
-CXF Service : http://cdi-cxf-demo.vagrant.f8/cxfcdi
+CXF Service : http://cdi-cxf-default.vagrant.f8/cxfcdi
 
 # Requests
 
 http --verify=no https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/2.0/customerservice/customers/123
-
 http --verify=no -a demo:demoooo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123
-
 http --verify=no -a demo:demo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123
 
 curl -sk https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/2.0/customerservice/customers/123 | xmllint --format - | pygmentize -l xml
 curl -sk -u demo:demooo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123 | prettyjson
 curl -sk -u demo:demo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123 | xmllint --format - | pygmentize -l xml
+
+curl -X POST -T /Users/chmoulli/MyProjects/MyConferences/conferences-2016/scripts/user.xml -H "Content-Type: application/xml" http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers
+curl -s http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers/127 | xmllint --format - | pygmentize -l xml
+curl -X PUT -T /Users/chmoulli/MyProjects/MyConferences/conferences-2016/scripts/update_user.xml  -H "Content-Type: application/xml" http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers
+curl -s http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers/126 | xmllint --format - | pygmentize -l xml
+curl -X DELETE http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers/126
+curl -s http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers/126
 
 ./scripts/getToken.sh
 

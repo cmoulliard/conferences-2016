@@ -422,7 +422,7 @@ image:microservice/apiman-3.png[1000,1000]
 
 {blank-space}
 
-[.noredheader]
+[.conference]
 |===
 |Path |Verb |Role required
 |.* |PUT |Writer
