@@ -55,6 +55,7 @@ CXF Service : http://cdi-cxf-default.vagrant.f8/cxfcdi
 
 # Requests
 
+http http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers/123
 http --verify=no https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/2.0/customerservice/customers/123
 http --verify=no -a demo:demoooo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123
 http --verify=no -a demo:demo https://apiman-gateway.vagrant.f8/gateway/default/cdi-cxf/3.0/customerservice/customers/123
