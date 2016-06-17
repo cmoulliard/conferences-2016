@@ -119,4 +119,6 @@ curl -s  http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers/123 
    ionic build ios
    ionic run ios
 
+# Fabric8
 
+oc delete rc,service,route cdi-cxf

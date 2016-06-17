@@ -143,7 +143,7 @@ image::{revealjs_conference_logo}[]
 image:security/rest-3.png[width=95%]
 
 // ************** security - rest ************
-[#security-endpoint]
+[#security-intercept]
 == Intercept
 
 * Framework based    : Apache Shiro, Spring Security
@@ -156,6 +156,35 @@ image:security/spring_security.png[]
 image:camel/apache-camel.png[]
 
 * JAXRS              : @Roles
+
+// ************** Camel ************
+[#security-endpoint-camel]
+== Camel Design
+
+image:camel/pipeline.png[500,500]
+
+[source,java]
+----
+import org.apache.camel.builder.RouterBuilder;
+
+public class FilterRoute extends RouteBuilder {
+  public void configure() throws Exception {
+
+    from("netty4-http://http://localhost:7777/camel/client)
+    .setHeader("id").simple("$header.CamelHttpQuery")
+    .beanRef("customerServer","getCustomer";
+  }
+}
+----
+
+// ************** Camel ************
+[#security-endpoint-interceptor]
+== Interceptor
+
+* To trace, log, secure
+
+[.newline]
+image:camel/pipeline2.png[]
 
 // ************** security - rest ************
 [#security-endpoint-code-camel]
@@ -254,6 +283,31 @@ mapping.setMethod("GET");
 mapping.setConstraint(constraint);
 ----
 
+
+// ************** security - rest ************
+[#security-handler-code-auth]
+== Login Auth Example
+
+[source]
+----
+// Describe the Authentication Constraint to be applied (BASIC, DIGEST, NEGOTIATE, ...)
+Constraint constraint = new Constraint(Constraint.__BASIC_AUTH, "user");
+constraint.setAuthenticate(true);
+
+// Map the Auth Constraint with a Path
+ConstraintMapping cm = new ConstraintMapping();
+cm.setPathSpec("/*");
+cm.setConstraint(constraint);
+
+HashLoginService loginService = new HashLoginService("MyRealm",
+        "myrealm.props");
+
+ConstraintSecurityHandler sh = new ConstraintSecurityHandler();
+sh.setAuthenticator(new BasicAuthenticator());
+sh.setConstraintMappings(cm);
+sh.setLoginService(loginService);
+----
+
 // ************** security - rest ************
 [#security-handler-role]
 == JAXRS @Roles
@@ -328,9 +382,12 @@ image:security/rest-5.png[width=95%]
 == Api Man
 
 * Goal {icon-arrow-right} Externalize/Delegate security endpoint to *Api*
+
+{blank-space}
+
 * How {icon-arrow-right} Api acts as a *Proxy/Gateway* matching :
-- Incoming request against 1 {icon-arrow-right} Many policies &
-  Delivery requests to *target* endpoint if validation succeeds
+- Incoming request against 1 {icon-arrow-right} Many policies
+- Delivering requests to *target* endpoint if validation succeeds
 
 // ************** security - rest ************
 [#security-apiman-manager]
