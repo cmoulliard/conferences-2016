@@ -486,6 +486,12 @@ image:microservice/apiman-3.png[1000,1000]
 |.* |GET |Reader
 |===
 
+// ************** security - rest ************
+[#security-micro]
+== Discovery - Cloud Platform
+
+image:security/rest-6.png[width=95%]
+
 // ************** transition page ************
 [#transition7, data-background-color="#F8F8F8"]
 == {blank-space}
@@ -512,12 +518,6 @@ image::{revealjs_conference_logo}[]
 ** Performance
 ** New Architecture Brick
 ** Features = plugins available {icon-exclamation-mark}
-
-// ************** security - rest ************
-[#security-micro]
-== Microservices
-
-image:security/rest-6.png[width=95%]
 
 // ************** transition page ************
 [#transition8, data-background-color="#F8F8F8"]
