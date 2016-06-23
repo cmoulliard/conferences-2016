@@ -100,6 +100,27 @@ curl -s  http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers/123 
 
 2. Simple client project
 
+ git clone git@git.us.feedhenry.com:sa-jboss-uk/demo-mobile-client.git client
+ git clone git@git.us.feedhenry.com:sa-jboss-uk/demo-mobile-app.git application
+
+ cd client
+ npm install
+ npm install grunt
+ grunt:serve
+
+ cd application
+ npm install
+ npm install grunt
+
+ # Serve locally
+ cd client
+ grunt serve:local
+
+ cd application
+ grunt serve
+
+3. Simple client project with Ionic
+
    rm -rf hooks/
    rm -rf platforms/
    rm -rf plugins/
@@ -117,8 +138,19 @@ curl -s  http://cdi-cxf-default.vagrant.f8/cxfcdi/customerservice/customers/123 
    ionic build browser
    ionic run browser
 
+and
+
    ionic build ios
    ionic run ios
+
+4) Integrated with Backend
+
+ cd backend-service
+ grunt serve
+
+ cd client-ionic
+ ionic run ios
+
 
 # Fabric8
 
