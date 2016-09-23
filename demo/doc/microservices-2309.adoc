@@ -1,0 +1,170 @@
+:imagesdir: images/
+:revealjs_conference_logo: shadowman-solo.jpeg
+:speaker: Charles Moulliard (@cmoulliard)
+:speaker-title: Committer, Coder, Architect
+:speaker-email: cmoulliard@redhat.com
+:speaker-blog: http://cmoulliard.github.io
+:speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
+:talk-speaker: {speaker}
+:talk-name: Microservices - Demos
+:talk-date: 23 September 2016
+
+[#cover,data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,left="700px",top="300px"]
+image:{revealjs_conference_logo}[width="98%"]
+
+[#cover-h1,width="600px",left="0px",top="180px"]
+{talk-name}
+
+[#cover-h2,width="800px",left="0px",top="500px"]
+{speaker} +
+{talk-date}
+
+// ************** who - charles ********
+[#who]
+== Who
+
+* Committer on Middleware Technology
+
+* Obsidian Architect & Project Lead
+
+* Blog: {speaker-blog}
+
+* Twitter: {speaker-twitter}
+
+* Email: {speaker-email}
+
+// ************** transition page ************
+[#transition1, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="350px"]
+*Vert.x & ConfigMap*
+
+// ************** vertx ************
+[#vertx-1]
+== Vert.x Use case
+
+* This is a Vert.x Microservice
+* Exposing a Rest Http Endpoint
+
+[source]
+----
+Router router = Router.router(vertx);
+
+router.route().handler(BodyHandler.create());
+router.get("/products/:productID").handler(this::handleGetProduct);
+router.put("/products/:productID").handler(this::handleAddProduct);
+router.get("/products").handler(this::handleListProducts);
+----
+
+* Deployed as a pod on OoenShift
+
+// ************** security - rest ************
+[#vertx-2]
+== Con't
+
+* Configured using ServiceConfiguration
+
+[source]
+----
+private void setUpConfiguration() {
+    ConfigurationStoreOptions appStore = new ConfigurationStoreOptions();
+    appStore.setType("configmap")
+            .setConfig(new JsonObject()
+                    .put("namespace", "vertx-demo")
+                    .put("name", "app-config")
+                    .put("key","app.json"));
+
+    conf = ConfigurationService.create(vertx, new ConfigurationServiceOptions()
+            .addStore(appStore));
+----
+
+* https://github.com/redhat-microservices/quick_vertx_kube-configmap
+
+// ************** transition page ************
+[#transition2, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="350px"]
+*Demo*
+
+// ************** transition page ************
+[#transition3, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*WildFly Swarm & Arquillian Cube*
+
+
+// ************** wildfly ************
+[#swarm-1]
+== WildFly Swarm Use Case
+
+* This is a WildFly Swarm & Camel Microservice
+* Uses new Camel Rest DSL Syntax
+
+[source,java]
+----
+rest("/service").description("Api rest service")
+                .consumes("application/json")
+                .produces("application/json")
+
+   .get("/say/{name}").description("Say Hello to the name")
+        .param().name("id").type(path)
+                .description("The name of the user to say Hello")
+                .dataType("string")
+        .endParam()
+        .to("direct:say");
+
+from("direct:say")
+   .transform()
+   .simple("Hello from REST endpoint to ${header.name}");
+----
+
+// ************** wildfly ************
+[#swarm-2]
+== Con't
+
+* Runs with Swagger, Jolokia
+* Deployed as a pod on OoenShift
+* Demonstrates Arquillian Cube
+
+https://github.com/redhat-microservices/quick_swarm_camel-test
+
+// ************** transition page ************
+[#transition4, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="350px"]
+*Demo*
+
+// *********************************
+[#questions]
+== Questions
+
+[#block,top="200px",left="590px"]
+image:{revealjs_conference_logo}[width="70%"]
+
+[.noredheader,cols="65,.<45"]
+|===
+
+.2+|image:speaker/questions.png[width="95%",height="95%"]
+a|* Twitter : *{speaker-twitter}*
+|===
+
+* Vert.x : *http://vertx.io.io*, Arquillian Cube : *http://http://arquillian.org/arquillian-cube/*, WildFly Swarm : *wildfly-swarm.io*
