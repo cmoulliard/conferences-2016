@@ -1,0 +1,554 @@
+:footer_copyright: Copyright ©2016 Red Hat, Inc.
+:imagesdir: images/
+:revealjs_conference_logo: javasi/logo2.png
+:speaker: Charles Moulliard (@cmoulliard)
+:speaker-title: Coder, Architect
+:speaker-email: cmoulliard@redhat.com
+:speaker-blog: http://cmoulliard.github.io
+:speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
+:talk-speaker: {speaker}
+:talk-name: WildFly Swarm Microservices
+:talk-date: 17, 18 Oct 2016
+
+[#cover,data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,left="700px",top="230px"]
+image:javasi/logo2.png[width="140%"]
+
+[#cover-h1,width="600px",left="0px",top="180px"]
+{talk-name}
+
+[#cover-h2,width="800px",left="0px",top="500px"]
+{speaker} +
+{talk-date}
+
+// ************** who - charles ********
+[#who]
+== Who
+
+* {speaker-title}
+
+* Apache Camel, Fabric8, WildFly Swarm, JBoss Forge committer
+
+* Mountain Biker, Belgian Beer Fan
+
+* Blog: {speaker-blog}
+
+* Twitter: {speaker-twitter}
+
+* Email: {speaker-email}
+
+// ************** Agenda ********
+[#agenda]
+== Agenda
+
+* The Context: Microservices and Java EE
+* WildFly Swarm: Concepts, Ideas & Mechanics
+* Code and Demo
+* Discussions and (hopefully) beer
+
+// ************** transition page ************
+[#transition1, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Microservices*
+
+// ************** microservices ************
+[#microservices]
+== Microservices
+
+image:microservice/martin-fowler.png[]
+
+– Martin Fowler, ThoughtWorks
+
+// ************** microservices ************
+[#microservices-decomposition]
+== Decomposition
+
+image:microservice/microservice.jpeg[]
+
+// ************** microservices ************
+[#microservices-old]
+== SOA, ...
+
+image:microservice/microservice.jpg[]
+
+// ************** microservices ************
+[#microservices-example]
+== Example
+
+image:microservice/microservice1.png[]
+
+// ************** microservice ************
+[#microservice]
+== MicroService
+
+[.noredheader]
+|===
+a|* It is an *architectural* style where an application
+* {icon-arrow-right} composed of *individual* standalone *services*
+* {icon-arrow-right} *communicating* using *lightweight* protocols
+* {icon-arrow-right} in *event* based manner | image:microservice2.png[500,500]
+|===
+
+// ************** transition page ************
+[#transition2, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*... & Java EE*
+
+// ************** javaee ************
+[#javaee]
+== Perspectives on JavaEE
+
+* It’s different things to different people:
+** A collection of (useful) API’s
+** Technical capabilities of a system
+** A love/hate relationship (of the past)
+** (Existing) knowledge and expertise
+
+// ************** javaee ************
+[#javaee-perception]
+== Perception
+
+image::microservice/fat-javaee.png[]
+
+// ************** javaee ************
+[#javaee-stack]
+== Stack of .....
+
+image::microservice/javaee-stack.png[]
+
+// ************** javaee ************
+[#javaee-stack-jvm]
+== Plus JVM
+
+image::microservice/javaee-stack-jvm.png[]
+
+// ************** javaee ************
+[#javaee-need]
+== What I really need
+
+image::microservice/app1.png[width="80%"]
+
+// ************** transition page ************
+[#transition3, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*WildFly Swarm*
+
+// ************** swarm ************
+[#swarm-intro]
+== Intro
+
+[.noredheader]
+|===
+a|* OSS Project sponsored by Red Hat
+* Sidekick of Wildfly Application Server
+* Small, but ambitious and friendly community
+* Part of a bigger system of interrelated projects under the JBoss / Red Hat umbrella | image:microservice/swarm-logo.png[width="60%"]
+|===
+
+// ************** swarm ************
+[#swarm-justenough]
+== Just Enough App Server
+
+[.noredheader]
+|===
+a|* Use the API’s you want
+* Include the capabilities you need
+* Wrap it up for deployment | image:microservice/wildfly-app.png[]
+|===
+
+// ************** swarm ************
+[#swarm-uberjar]
+== Uber Jar
+
+[.noredheader]
+|===
+a|* A single .jar file containing your application,
+* the portions of WildFly required to support it,
+* an internal Maven repository of dependencies,
+* plus a shim to bootstrap it all | image:microservice/swarm-uberjar.png[width="70%"]
+|===
+
+// ************** swarm ************
+[#swarm-fractions]
+== Fractions
+
+* A well-defined collection of application capabilities.
+* May map directly to a WildFly subsystem,
+* or bring in external capabilities such as Netflix Ribbon.
+
+// ************** swarm ************
+[#swarm-fractions-do]
+== What Fractions can do
+
+* Enable WildFly subsystems (JAX-RS, Infinispan)
+* Integrate additional system capabilities (Topology)
+* Provide deployments (ribbon-webapp, jolokia)
+* Alter deployments (keycloak)
+
+// ************** swarm ************
+[#swarm-examples]
+== Examples
+
+image:microservice/fractions.png[]
+
+// ************** transition page ************
+[#transition4, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Convert Java EE App to use WildFly Swarm*
+
+// ************** swarm ************
+[#swarm-add-fraction]
+== Adding Fraction to your build
+
+[source,xml]
+----
+<dependency>
+  <groupId>org.wildfly.swarm</groupId>
+  <artifactId>jaxrs</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.wildfly.swarm</groupId>
+  <artifactId>cdi</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.wildfly.swarm</groupId>
+  <artifactId>swagger</artifactId>
+</dependency>
+...
+----
+
+// ************** swarm ************
+[#swarm-add-plugin]
+== Adding maven plugin
+
+[source,xml]
+----
+<plugin>
+  <groupId>org.wildfly.swarm</groupId>
+  <artifactId>wildfly-swarm-plugin</artifactId>
+  <version>${wildfly.swarm.version}</version>
+  <configuration>
+    <properties>
+      <swarm.port.offset>200</swarm.port.offset>
+    </properties>
+  </configuration>
+  <executions>
+    <execution>
+      <goals>
+        <goal>package</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+----
+
+// ************** swarm ************
+[#swarm-build-run]
+== Building & running
+
+* Build the maven module
+[source]
+----
+$ mvn clean package
+$ ls -la target/your.jar
+----
+
+* Run your Swarm App
+[source]
+----
+$ java -jar target/your.jar
+$ mvn wildfly-swarm:run
+----
+
+// ************** transition page ************
+[#transition5, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="250px",top="200px"]
+*Demo*
+
+// ************** transition page ************
+[#transition6, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Docker Container*
+
+// ************** docker ************
+[#process]
+== Process
+
+[#block,width="800px",top="50px"]
+image:container/docker-animated-1.gif[]
+
+// ************** docker ************
+[#docker-image]
+== Docker
+
+image:container/docker-filesystems-multilayer.png[width="60%,height="60%"]
+
+* Union *FS* mounted with immutable images
+* Benefits: *portability*, *reusability*, versioning, application-centric
+
+// ************** docker ************
+[#docker-config]
+== Docker config
+
+[#block,width="150px",top="50px",left="50px"]
+image:container/dockerfile.png[width="95%"]
+
+// ************** docker ************
+[#docker]
+== Docker
+
+* *Container runtime*, *Process* launcher
+
+[#block,width="650px",top="150px"]
+image:container/docker-animated-2.gif[]
+
+[#block,width="100px",top="-50px",left="160px"]
+image:container/docker-logo.png[width="25%",height="25%"]
+
+// ************** docker plugin ************
+[#docker-plugin]
+== Maven Docker Plugin
+
+* docker:build {icon-arrow-right} Build image of app
+* docker:push {icon-arrow-right} Push image
+
+[source,xml]
+----
+<docker.from>fabric8/s2i-java:1.2</docker.from>
+<docker.image>${docker.registryPrefix}fabric8/${project.artifactId}:${project.version}</docker.image>
+<docker.port.container.jolokia>8778</docker.port.container.jolokia>
+<docker.registryPrefix>${env.DOCKER_REGISTRY}/</docker.registryPrefix>
+----
+
+[source,xml]
+----
+<plugin>
+    <groupId>org.jolokia</groupId>
+    <artifactId>docker-maven-plugin</artifactId>
+    <version>${docker.maven.plugin.version}</version>
+    <configuration>
+      <images>
+        <image>
+          <name>${docker.image}</name>
+          <build>
+            <from>${docker.from}</from>
+            <assembly>
+              <basedir>/deployments</basedir>
+              <descriptorRef>hawt-app</descriptorRef>
+            </assembly>
+            <env>
+              <JAVA_LIB_DIR>/deployments/lib</JAVA_LIB_DIR>
+              <JAVA_MAIN_CLASS>org.apache.camel.cdi.Main</JAVA_MAIN_CLASS>
+            </env>
+          </build>
+        </image>
+      </images>
+    </configuration>
+</plugin>
+----
+
+// ************** transition page ************
+[#transition7, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*With Docker*
+
+// ************** transition page ************
+[#demo-docker]
+== {blank-space}
+
+image:microservice/microservice-docker-rest.png[]
+
+// ************** transition page ************
+[#transition8, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Kubernetes & Openshift*
+
+// ************** kubernetes ************
+[#kubernetes]
+== Kubernetes
+
+* Runtime & *Operational management* of containers
+* ApiServer (event, status)
+* *Scheduler*, *Controller* & State Storage
+* *Agent - Kubelet* - manage containers on host
+* Containers {icon-arrow-right} *pods* (= shared docker containers)
+
+image:container/kubernetes-logo.png[width="25%",height="25%"]
+
+// ************** kubernetes ************
+[#kubernetes-platform]
+== Kubernetes
+
+[#block,width="800px",left="0px",top="50px"]
+image:container/kubernetes-platform.png[]
+
+// ************** kubernetes ************
+[#pord-docker]
+== Pod & docker
+
+image:fabric8/fabric8-pod.png[]
+
+* Communicate to each other using *skyDNS* to resolve hostname
+
+// ************** kubernetes ************
+[#pod-port]
+== Pod & port
+
+image:fabric8/fabric8-pod-port.png[]
+
+* Ports can be *exposed*
+
+// ************** kubernetes ************
+[#pod-volume]
+== Pod & volume
+
+image:fabric8/fabric8-pod-volume.png[]
+
+* *Share data* using *mounted volume* between host & container
+
+// ************** kubernetes ************
+[#kubernetes-service]
+== Kubernetes Service
+
+image:fabric8/fabric8-service-pod.png[]
+
+* Kube Service *loadbalanced* through the pods using *HA-Proxy*
+ *Routes* map *private* with *public* IP address
+
+// ************** kubernetes ************
+[#kube-application]
+== Kube Application JSon
+
+[.noredheader]
+|===
+| image:container/kubernetes-json-1.png[width="85%"] | image:container/kubernetes-json-2.png[width="65%"]
+|===
+
+// ************** transition page ************
+[#transition9, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*Fabric8*
+
+// ************** fabric v2 ************
+[#fabric8-plugin]
+== http://fabric8.io/gitbook/mavenPlugin.html[Fabric8 Maven Plugin]
+
+* fabric8:json {icon-arrow-right} generates Kube MetaData
+* fabric8:apply {icon-arrow-right} deploy on Openshift
+
+[source,xml]
+----
+<fabric8.service.name>hellorest</fabric8.service.name>
+<fabric8.service.port>9090</fabric8.service.port>
+<fabric8.service.containerPort>8080</fabric8.service.containerPort>
+
+<fabric8.label.component>${project.artifactId}</fabric8.label.component>
+<fabric8.label.container>tomcat</fabric8.label.container>
+<fabric8.label.group>demo</fabric8.label.group>
+<fabric8.service.type>LoadBalancer</fabric8.service.type>
+<fabric8.iconRef>camel</fabric8.iconRef>
+----
+
+[source,xml]
+----
+<plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>${fabric8.version}</version>
+        <executions>
+          <execution>
+            <id>json</id>
+            <goals>
+              <goal>json</goal>
+            </goals>
+----
+
+// ************** transition page ************
+[#transition10, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*With OpenShift & Kubernetes*
+
+// ***************** Demo *****************
+[#demo-kubernetes]
+== {blank-space}
+
+image:microservice/microservice-kubernetes-rest.png[]
+
+// ***************** Demo *****************
+[#swarm]
+== Get Involved
+
+* Project Home: http://wildfly-swarm.io
+* GitHub: https://github.com/wildfly-swarm
+* Twitter: @wildflyswarm
+* Freenode: @wildfly-swarm
+* Issues: https://issues.jboss.org/projects/SWARM (see ‘getting-started’ labels)
+
+// *********************************
+[#questions]
+== Questions
+
+[#block,top="200px",left="790px"]
+image:{revealjs_conference_logo}[width="80%"]
+
+[.noredheader,cols="65,.<45"]
+|===
+
+.2+|image:speaker/questions.png[width="95%",height="95%"]
+a|* Twitter : *{speaker-twitter}*
+|===
+
+* Camel Rest MicroService in Action {icon-arrow-right} *https://github.com/FuseByExample/microservice-camel-in-action*
+* http://fabric8.io/

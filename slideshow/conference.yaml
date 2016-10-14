@@ -1,5 +1,5 @@
 source: slideshow
-destination: slideshow/generated
+destination: slideshow/generated2
 backend: revealjs-redhat
 rendering: adoc2html     
 
