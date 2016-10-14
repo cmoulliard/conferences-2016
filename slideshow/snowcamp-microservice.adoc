@@ -91,7 +91,7 @@ Communication done through a Bus with Normalized messages
 a|* It is an *architectural* style where an application
 * {icon-arrow-right} composed of *individual* standalone *services*
 * {icon-arrow-right} *communicating* using *lightweight* protocols
-* {icon-arrow-right} in *event* based manner | image:microservice2.png[500,500]
+* {icon-arrow-right} in *event* based manner | image:microservice/topology.png[500,500]
 |===
 
 // ************** transition page ************

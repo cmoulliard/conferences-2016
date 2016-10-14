@@ -105,10 +105,10 @@ image::{revealjs_conference_logo}[]
 == Perspectives on JavaEE
 
 * It’s different things to different people:
-** A collection of (useful) API’s
-** Technical capabilities of a system
-** A love/hate relationship (of the past)
-** (Existing) knowledge and expertise
+* A collection of (useful) API’s
+* Technical capabilities of a system
+* A love/hate relationship (of the past)
+* (Existing) knowledge and expertise
 
 // ************** javaee ************
 [#javaee-perception]
@@ -133,6 +133,25 @@ image::microservice/javaee-stack-jvm.png[]
 == What I really need
 
 image::microservice/app1.png[width="80%"]
+
+// ************** javaee ***************
+[#javaee-pro]
+== {blank-space}
+
+Adam Bien --
+
+[...] "a perfect JavaEE microservice is single [Entity Control Boundary] component within a WAR deployed on a single server/domain
+where WARs are forced to use e.g. JAX-RS to communicate with each other."
+
+KumuluZee --
+
+[...] "a true micro service architecture is not possible in Java EE without a framework that automates deployment and configuration"
+
+Rich Tower --
+
+[...] "If you are deploying a WAR file to a Java EE container then you are probably not doing microservice development.
+If you have more than one WAR file in the container or an EAR file, then you are definitely not doing microservice development.
+If you are deploying your service as an AMI or docker container and your microservice has a main method, then you might be writing a microservice."
 
 // ************** transition page ************
 [#transition3, data-background-color="#F8F8F8"]
