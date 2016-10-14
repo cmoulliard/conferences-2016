@@ -135,7 +135,7 @@ image::microservice/javaee-stack-jvm.png[]
 image::microservice/app1.png[width="80%"]
 
 // ************** javaee ***************
-[#javaee-pro]
+[#javaee-consideration1]
 == {blank-space}
 
 Adam Bien --
@@ -147,11 +147,17 @@ KumuluZee --
 
 [...] "a true micro service architecture is not possible in Java EE without a framework that automates deployment and configuration"
 
+// ************** javaee ***************
+[#javaee-consideration2]
+== {blank-space}
+
 Rich Tower --
 
 [...] "If you are deploying a WAR file to a Java EE container then you are probably not doing microservice development.
 If you have more than one WAR file in the container or an EAR file, then you are definitely not doing microservice development.
 If you are deploying your service as an AMI or docker container and your microservice has a main method, then you might be writing a microservice."
+
+Reference : https://www.infoq.com/news/2016/02/javaee-microservices
 
 // ************** transition page ************
 [#transition3, data-background-color="#F8F8F8"]
@@ -216,8 +222,8 @@ a|* A single .jar file containing your application,
 * Alter deployments (keycloak)
 
 // ************** swarm ************
-[#swarm-examples]
-== Examples
+[#swarm-fractions]
+== Fractions
 
 image:microservice/fractions.png[]
 
@@ -401,15 +407,29 @@ public class MySwarmApp {
 ----
 * (provided by Keycloak: OpenID, SAML, Social Login, OAuth, LDAP, Active Directory)
 
-// ***************** swarm *****************
-[#swarm-getinvolved]
-== Get Involved
+// ************** transition page ************
+[#transition6, data-background-color="#F8F8F8"]
+== {blank-space}
 
-* Project Home: http://wildfly-swarm.io
-* GitHub: https://github.com/wildfly-swarm
-* Twitter: @wildflyswarm
-* Freenode: @wildfly-swarm
-* Issues: https://issues.jboss.org/projects/SWARM (see ‘getting-started’ labels)
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Microservices platform*
+
+// ***************** openshift *****************
+[#openshift]
+== Orchestration
+
+// ************** transition page ************
+[#transition7, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Demo*
 
 // ******************* questions **************
 [#questions]
@@ -425,5 +445,5 @@ image:{revealjs_conference_logo}[width="80%"]
 a|* Twitter : *{speaker-twitter}*
 |===
 
-* Camel Rest MicroService in Action {icon-arrow-right} *https://github.com/FuseByExample/microservice-camel-in-action*
-* http://fabric8.io/
+* Demos {icon-arrow-right} *https://github.com/*
+* http://wildfly-swarm.io
