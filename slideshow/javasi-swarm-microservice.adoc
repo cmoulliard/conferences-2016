@@ -8,7 +8,7 @@
 :speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
 :talk-speaker: {speaker}
 :talk-name: WildFly Swarm Microservices
-:talk-date: 17, 18 Oct 2016
+:talk-date: 17 Oct 2016
 
 [#cover,data-background-color="#F8F8F8"]
 == {blank-space}
@@ -28,6 +28,8 @@ image:javasi/logo2.png[width="140%"]
 == Who
 
 * {speaker-title}
+
+* Red Hat Engineer : Architect & Project lead
 
 * Apache Camel, Fabric8, WildFly Swarm, JBoss Forge committer
 
@@ -105,10 +107,13 @@ image::{revealjs_conference_logo}[]
 == Perspectives on JavaEE
 
 * It’s different things to different people:
-* A collection of (useful) API’s
-* Technical capabilities of a system
-* A love/hate relationship (of the past)
-* (Existing) knowledge and expertise
+** A collection of (useful) API’s
+** Stack of Frameworks
+** Designed to support distributed apps
+* Is JavaEE Ready {icon-arrow-right} Microservices
+* Does it support Microservices patterns {icon-arrow-right} Microprofile
+
+image:microservice/microprofile.png[]
 
 // ************** javaee ************
 [#javaee-perception]
@@ -135,29 +140,53 @@ image::microservice/javaee-stack-jvm.png[]
 image::microservice/app1.png[width="80%"]
 
 // ************** javaee ***************
-[#javaee-consideration1]
+// [#javaee-consideration1]
+// == {blank-space}
+//
+// Adam Bien --
+//
+// [...] "a perfect JavaEE microservice is single [Entity Control Boundary] component within a WAR deployed on a single server/domain
+// where WARs are forced to use e.g. JAX-RS to communicate with each other."
+//
+// KumuluZee --
+//
+// [...] "a true micro service architecture is not possible in Java EE without a framework that automates deployment and configuration"
+//
+// // ************** javaee ***************
+// [#javaee-consideration2]
+// == {blank-space}
+//
+// Rich Tower --
+//
+// [...] "If you are deploying a WAR file to a Java EE container then you are probably not doing microservice development.
+// If you have more than one WAR file in the container or an EAR file, then you are definitely not doing microservice development.
+// If you are deploying your service as an AMI or docker container and your microservice has a main method, then you might be writing a microservice."
+//
+// Reference : https://www.infoq.com/news/2016/02/javaee-microservices
+
+// ************** microservices ***************
+[#micro-platform]
+== Be more concrete
+
+image::microservice/micro-platform.png[]
+
+// ************** microservices ***************
+[#micro-platform-concerns]
 == {blank-space}
 
-Adam Bien --
+image::microservice/micro-platform-questions.png[]
 
-[...] "a perfect JavaEE microservice is single [Entity Control Boundary] component within a WAR deployed on a single server/domain
-where WARs are forced to use e.g. JAX-RS to communicate with each other."
-
-KumuluZee --
-
-[...] "a true micro service architecture is not possible in Java EE without a framework that automates deployment and configuration"
-
-// ************** javaee ***************
-[#javaee-consideration2]
+// ************** microservices ***************
+[#micro-platform-openshift]
 == {blank-space}
 
-Rich Tower --
+image::microservice/micro-platform-openshift.png[]
 
-[...] "If you are deploying a WAR file to a Java EE container then you are probably not doing microservice development.
-If you have more than one WAR file in the container or an EAR file, then you are definitely not doing microservice development.
-If you are deploying your service as an AMI or docker container and your microservice has a main method, then you might be writing a microservice."
+// ************** microservices ***************
+[#micro-platform-openshift-services]
+== {blank-space}
 
-Reference : https://www.infoq.com/news/2016/02/javaee-microservices
+image::microservice/micro-platform-openshift-services.png[]
 
 // ************** transition page ************
 [#transition3, data-background-color="#F8F8F8"]
@@ -177,7 +206,8 @@ image::{revealjs_conference_logo}[]
 |===
 a|* OSS Project sponsored by Red Hat
 * Sidekick of Wildfly Application Server
-* Small, but ambitious and friendly community
+* Support MicroProfile
+* Microservices ready
 * Part of a bigger system of interrelated projects under the JBoss / Red Hat umbrella | image:microservice/swarm-logo.png[width="60%"]
 |===
 
@@ -222,8 +252,8 @@ a|* A single .jar file containing your application,
 * Alter deployments (keycloak)
 
 // ************** swarm ************
-[#swarm-fractions]
-== Fractions
+[#swarm-some-fractions]
+== Some Fractions
 
 image:microservice/fractions.png[]
 
@@ -408,21 +438,23 @@ public class MySwarmApp {
 * (provided by Keycloak: OpenID, SAML, Social Login, OAuth, LDAP, Active Directory)
 
 // ************** transition page ************
-[#transition6, data-background-color="#F8F8F8"]
-== {blank-space}
-
-[#block,width="200px",left="70px",top="0px"]
-image::{revealjs_conference_logo}[]
-
-[#cover-h1,width="600px",left="0px",top="300px"]
-*Microservices platform*
+// [#transition7, data-background-color="#F8F8F8"]
+// == {blank-space}
+//
+// [#block,width="200px",left="70px",top="0px"]
+// image::{revealjs_conference_logo}[]
+//
+// [#cover-h1,width="600px",left="0px",top="300px"]
+// *Microservices platform*
 
 // ***************** openshift *****************
-[#openshift]
-== Orchestration
+// [#openshift]
+// == {blank-space}
+//
+// video::D_Lj0rObunI[youtube]
 
 // ************** transition page ************
-[#transition7, data-background-color="#F8F8F8"]
+[#transition8, data-background-color="#F8F8F8"]
 == {blank-space}
 
 [#block,width="200px",left="70px",top="0px"]
@@ -431,12 +463,18 @@ image::{revealjs_conference_logo}[]
 [#cover-h1,width="600px",left="0px",top="300px"]
 *Demo*
 
+// ************** swarm ************
+[#swarm-demo]
+== WildFly Microservices Demo
+
+image:microservice/micro-demo.png[]
+
 // ******************* questions **************
 [#questions]
 == Questions
 
-[#block,top="200px",left="790px"]
-image:{revealjs_conference_logo}[width="80%"]
+[#block,top="200px",left="600px"]
+image:{revealjs_conference_logo}[width="85%"]
 
 [.noredheader,cols="65,.<45"]
 |===
@@ -445,5 +483,5 @@ image:{revealjs_conference_logo}[width="80%"]
 a|* Twitter : *{speaker-twitter}*
 |===
 
-* Demos {icon-arrow-right} *https://github.com/*
+* Demos {icon-arrow-right} *https://github.com/cmoulliard/swarm-openshift*
 * http://wildfly-swarm.io
