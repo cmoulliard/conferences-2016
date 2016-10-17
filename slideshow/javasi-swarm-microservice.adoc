@@ -92,53 +92,6 @@ image:microservice/topology.png[600,600]
 //
 // image:microservice/microservice1.png[]
 
-// ************** transition page ************
-[#transition2, data-background-color="#F8F8F8"]
-== {blank-space}
-
-[#block,width="200px",left="70px",top="0px"]
-image::{revealjs_conference_logo}[]
-
-[#cover-h1,width="600px",left="0px",top="400px"]
-*... & Java EE*
-
-// ************** javaee ************
-[#javaee]
-== Perspectives on JavaEE
-
-* It’s different things to different people:
-** A collection of (useful) API’s
-** Stack of Frameworks
-** Designed to support distributed apps
-* Is JavaEE Ready {icon-arrow-right} Microservices
-* Does it support Microservices patterns {icon-arrow-right} Microprofile
-
-image:microservice/microprofile.png[]
-
-// ************** javaee ************
-[#javaee-perception]
-== Perception
-
-image::microservice/fat-javaee.png[]
-
-// ************** javaee ************
-[#javaee-stack]
-== Stack of .....
-
-image::microservice/javaee-stack.png[]
-
-// ************** javaee ************
-[#javaee-stack-jvm]
-== Plus JVM
-
-image::microservice/javaee-stack-jvm.png[]
-
-// ************** javaee ************
-[#javaee-need]
-== What I really need
-
-image::microservice/app1.png[width="80%"]
-
 // ************** javaee ***************
 // [#javaee-consideration1]
 // == {blank-space}
@@ -187,6 +140,55 @@ image::microservice/micro-platform-openshift.png[]
 == {blank-space}
 
 image::microservice/micro-platform-openshift-services.png[]
+
+// ************** transition page ************
+[#transition2, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="400px"]
+*... & Java EE*
+
+// ************** javaee ************
+[#javaee]
+== Perspectives on JavaEE
+
+* A collection of (useful) API’s
+* Stack of Frameworks
+* Designed to support distributed apps
+* *but* JavaEE 8/9 future - unclear
+* Is JavaEE Ready {icon-arrow-right} Microservices ?
+* Does it support Microservices patterns ?
+* New initiatives emerging {icon-arrow-right}
+
+image:microservice/microprofile.png[]
+
+// ************** javaee ************
+[#javaee-perception]
+== Perception
+
+image::microservice/fat-javaee.png[]
+
+// ************** javaee ************
+[#javaee-stack]
+== Stack of .....
+
+image::microservice/javaee-stack.png[]
+
+// ************** javaee ************
+[#javaee-stack-jvm]
+== Plus JVM
+
+image::microservice/javaee-stack-jvm.png[]
+
+// ************** javaee ************
+[#javaee-need]
+== What I really need
+
+image::microservice/app1.png[width="80%"]
+
 
 // ************** transition page ************
 [#transition3, data-background-color="#F8F8F8"]
