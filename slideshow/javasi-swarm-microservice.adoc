@@ -7,7 +7,7 @@
 :speaker-blog: http://cmoulliard.github.io
 :speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
 :talk-speaker: {speaker}
-:talk-name: WildFly Swarm Microservices
+:talk-name: Microservices with WildFly Swarm
 :talk-date: 17 Oct 2016
 
 [#cover,data-background-color="#F8F8F8"]
@@ -29,7 +29,7 @@ image:javasi/logo2.png[width="140%"]
 
 * {speaker-title}
 
-* Red Hat Engineer : Architect & Project lead
+* Red Hat Engineer : Architect/Project lead for Global Platform Team
 
 * Apache Camel, Fabric8, WildFly Swarm, JBoss Forge committer
 
@@ -127,13 +127,13 @@ image::microservice/micro-platform.png[]
 [#micro-platform-concerns]
 == {blank-space}
 
-image::microservice/micro-platform-questions.png[]
+image::microservice/micro-platform-questions.png[width="85%"]
 
 // ************** microservices ***************
 [#micro-platform-openshift]
 == {blank-space}
 
-image::microservice/micro-platform-openshift.png[]
+image::microservice/micro-platform-openshift.png[width="95%"]
 
 // ************** microservices ***************
 [#micro-platform-openshift-services]
@@ -156,12 +156,12 @@ image::{revealjs_conference_logo}[]
 == Perspectives on JavaEE
 
 * A collection of (useful) API’s
-* Stack of Frameworks
-* Designed to support distributed apps
-* *but* JavaEE 8/9 future - unclear
+* *Stack* of Frameworks
+* Designed to support *distributed apps*
 * Is JavaEE Ready {icon-arrow-right} Microservices ?
+* Depends what JavaEE 8/9 spec will propose
 * Does it support Microservices patterns ?
-* New initiatives emerging {icon-arrow-right}
+* New initiative emerges {icon-arrow-right} : https://microprofile.io/
 
 image:microservice/microprofile.png[]
 
@@ -204,14 +204,13 @@ image::{revealjs_conference_logo}[]
 [#swarm-intro]
 == Intro
 
-[.noredheader]
-|===
-a|* OSS Project sponsored by Red Hat
-* Sidekick of Wildfly Application Server
-* Support MicroProfile
-* Microservices ready
-* Part of a bigger system of interrelated projects under the JBoss / Red Hat umbrella | image:microservice/swarm-logo.png[width="60%"]
-|===
+image:microservice/swarm_logo_100px.png[]
+
+* *OSS* Project sponsored by Red Hat
+* *Compatriot* of Wildfly Application Server
+* Support *MicroProfile*
+* *Microservices* ready
+* Part of a bigger system of interrelated projects under the JBoss / Red Hat umbrella
 
 // ************** swarm ************
 [#swarm-justenough]
@@ -219,8 +218,8 @@ a|* OSS Project sponsored by Red Hat
 
 [.noredheader]
 |===
-a|* Use the API’s you want
-* Include the capabilities you need
+a|* Use the *API’s you want*
+* Include the *capabilities* you need
 * Wrap it up for deployment | image:microservice/wildfly-app.png[]
 |===
 
@@ -230,17 +229,17 @@ a|* Use the API’s you want
 
 [.noredheader]
 |===
-a|* A single .jar file containing your application,
-* the portions of WildFly required to support it,
+a|* A *single .jar* file containing your application,
+* the *portions* of WildFly required to support it,
 * an internal Maven repository of dependencies,
-* plus a shim to bootstrap it all | image:microservice/swarm-uberjar.png[width="70%"]
+* plus a *shim* to bootstrap it all | image:microservice/swarm-uberjar.png[width="70%"]
 |===
 
 // ************** swarm ************
 [#swarm-fractions]
 == Fractions
 
-* A well-defined collection of application capabilities.
+* A well-defined *collection* of application *capabilities*.
 * May map directly to a WildFly subsystem,
 * or bring in external capabilities such as Netflix Ribbon.
 
@@ -248,10 +247,10 @@ a|* A single .jar file containing your application,
 [#swarm-fractions-do]
 == What Fractions can do
 
-* Enable WildFly subsystems (JAX-RS, Infinispan)
-* Integrate additional system capabilities (Topology)
-* Provide deployments (ribbon-webapp, jolokia)
-* Alter deployments (keycloak)
+* Enable *WildFly subsystems* (JAX-RS, Infinispan)
+* Integrate *additional* system *capabilities* (Topology)
+* Provide *deployment* (ribbon-webapp, jolokia)
+* Alter *deployment* (keycloak)
 
 // ************** swarm ************
 [#swarm-some-fractions]
