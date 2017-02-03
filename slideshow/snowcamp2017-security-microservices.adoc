@@ -1,0 +1,548 @@
+:imagesdir: images/
+:revealjs_conference_logo: snowcamp/logo.png
+:speaker: Charles Moulliard
+:twitter: (@cmoulliard)
+:speaker-title: Committer, Architect
+:speaker-email: cmoulliard@redhat.com
+:speaker-blog: http://cmoulliard.github.io
+:speaker-twitter: http://twitter.com/cmoulliard[@cmoulliard]
+:talk-speaker: {speaker}
+:talk-name: Security enforcement of the Java Microservice Applications
+:talk-date: 10 January 2017
+
+[#cover,data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,left="700px",top="300px"]
+image:{revealjs_conference_logo}[width="98%"]
+
+[#cover-h1,width="600px",left="0px",top="100px"]
+{talk-name}
+
+[#cover-h2,width="800px",left="0px",top="400px"]
+{speaker} +
+{twitter} +
+{talk-date}
+
+// ************** who - charles ********
+[#who]
+== Who
+
+* {speaker-title}
+
+* Work on Apache Camel, Karaf, Fabric8, Hawtio, Apiman, Drools
+
+* Mountain Biker, Belgian Beer Fan
+
+* Blog: {speaker-blog}
+
+* Twitter: {speaker-twitter}
+
+* Email: {speaker-email}
+
+// ************** Agenda ********
+[#agenda]
+== Agenda
+
+* RESTfull Use case
+
+* How to Secure the Endpoint
+
+** Policy
+** Web Container
+** Api Management
+
+* Demo
+
+// ************** transition page ************
+[#transition1, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="350px"]
+*Use case description*
+
+// ************** security - rest ************
+[#security-uc]
+== Use case
+
+image:security/rest-1.png[width=95%]
+
+// ************** security - rest ************
+[#security-uc-code]
+== REST Service
+
+[source,java]
+----
+@GET
+@Path("/customers/{id}/")
+@Produces("application/xml")
+@ApiOperation(value = "Find Customer by ID",
+                       notes = "More notes about this method",
+                       response = Customer.class)
+
+@ApiResponses(value = {
+        @ApiResponse(code = 500, message = "Invalid ID supplied"),
+        @ApiResponse(code = 204, message = "Customer not found")
+})
+
+public Customer getCustomer(@ApiParam(value = "ID of Customer to fetch",
+                            required = true) @PathParam("id") String id) {
+    LOG.info("Invoking getCustomer, Customer id is: {}", id);
+
+    long idNumber = Long.parseLong(id);
+    Customer c = customers.get(idNumber);
+    return c;
+}
+----
+
+// ************** security - rest ************
+[#security-uc-services]
+== Api documented : Swagger
+
+image:security/swagger-service.png[width=95%]
+
+// ************** transition page ************
+[#transition2, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*How to Secure ?*
+
+// ************** security - rest ************
+[#security-global]
+== Level !
+
+* Endpoint {icon-arrow-right} Framework/Policy/Interceptor
+
+{blank-space}
+
+* HTTP Web Container {icon-arrow-right} Handler & Constraints
+
+{blank-space}
+
+* Externally {icon-arrow-right} Api Manager
+
+// ************** transition page ************
+[#transition3, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Endpoint Level*
+
+// ************** security - rest ************
+[#security-endpoint-level]
+== Endpoint level
+
+image:security/rest-3.png[width=95%]
+
+// ************** security - rest ************
+[#security-intercept]
+== Intercept
+
+* Framework based    : Apache Shiro, Spring Security
+
+image:security/apache_shiro_logo.png[]
+image:security/spring_security.png[]
+
+* Interceptor/Policy : Apache Camel, Apache CXF
+
+image:camel/apache-camel.png[]
+
+* JAXRS              : @Roles
+
+// ************** Camel ************
+[#security-endpoint-camel]
+== Camel Design
+
+image:camel/pipeline.png[500,500]
+
+[source,java]
+----
+import org.apache.camel.builder.RouterBuilder;
+
+public class FilterRoute extends RouteBuilder {
+  public void configure() throws Exception {
+
+    from("netty4-http://http://localhost:7777/camel/client)
+    .setHeader("id").simple("$header.CamelHttpQuery")
+    .beanRef("customerServer","getCustomer";
+  }
+}
+----
+
+// ************** Camel ************
+[#security-endpoint-interceptor]
+== Interceptor
+
+* To trace, log, secure
+
+[.newline]
+image:camel/pipeline2.png[]
+
+// ************** security - rest ************
+[#security-endpoint-code-camel]
+== Camel Endpoint
+
+* Goal {icon-arrow-right} *Extract* from the HTTP request the info needed to authenticate a user
+* How  {icon-arrow-right} Use a Camel Policy to *wrap* the Route / Pipeline with a new processor
+
+{blank-space}
+
+.Camel Example
+[source]
+----
+public class ShiroSecurityPolicy implements AuthorizationPolicy {
+
+    public Processor wrap(RouteContext routeContext, final Processor processor) {
+        return new ShiroSecurityProcessor(processor, this);
+    }
+    ...
+    @Override
+    public boolean process(Exchange exchange, AsyncCallback callback) {
+        try {
+            applySecurityPolicy(exchange);
+----
+
+// ************** security - rest ************
+[#security-endpoint-code-cxf]
+== CXF Endpoint
+
+- How {icon-arrow-right} Using the *ContainerRequestFilter* JAXRS Interface
+- Rely on CXF *Intercept*
+
+{blank-space}
+
+.CXF Example
+[source]
+----
+@Provider
+@PreMatching
+public class SecurityRequestFilter implements ContainerRequestFilter {
+
+@Override
+    public void filter(final ContainerRequestContext requestContext)
+                throws IOException {
+...
+----
+
+// ************** transition page ************
+[#transition4, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Web HTTP Container*
+
+// ************** security - rest ************
+[#security-container-level]
+== Web container level
+
+image:security/rest-2.png[width=95%]
+
+// ************** security - rest ************
+[#security-handler]
+== HTTP Handler
+
+- How {icon-arrow-right} Apply *Constraints* on Web Resources path(s)
+
+[source]
+----
+GET /rest/accountservice/account for User
+POST /webservices/customerservices/customer for Admin
+----
+
+- Designed using *JAAS* {icon-arrow-right} JDBC, LDAP, Properties
+
+- Could use *Roles*
+
+// ************** security - rest ************
+[#security-handler-code]
+== Jetty Example
+
+* Goal {icon-arrow-right} restrict or allow access to resources
+* How {icon-arrow-right} URL requested matched with one the rule(s)
+
+.Example
+[source]
+----
+Constraint constraint = new Constraint();
+constraint.setRoles(new String[] { "user", "admin" });
+
+ConstraintMapping mapping = new ConstraintMapping();
+mapping.setPathSpec("/say/hello/*");
+mapping.setMethod("GET");
+mapping.setConstraint(constraint);
+----
+
+
+// ************** security - rest ************
+[#security-handler-code-auth]
+== Login Auth Example
+
+[source]
+----
+// Describe the Authentication Constraint to be applied (BASIC, DIGEST, NEGOTIATE, ...)
+Constraint constraint = new Constraint(Constraint.__BASIC_AUTH, "user");
+constraint.setAuthenticate(true);
+
+// Map the Auth Constraint with a Path
+ConstraintMapping cm = new ConstraintMapping();
+cm.setPathSpec("/*");
+cm.setConstraint(constraint);
+
+HashLoginService loginService = new HashLoginService("MyRealm",
+        "myrealm.props");
+
+ConstraintSecurityHandler sh = new ConstraintSecurityHandler();
+sh.setAuthenticator(new BasicAuthenticator());
+sh.setConstraintMappings(cm);
+sh.setLoginService(loginService);
+----
+
+// ************** security - rest ************
+[#security-handler-role]
+== JAXRS @Roles
+
+- Goal {icon-arrow-right} Allow/Deny Access to resources
+- How {icon-arrow-right} using annotation @RolesAllowed
+
+.Example
+[source]
+----
+@Path("projects")
+@Produces("application/json")
+public class ProjectsResource {
+
+    @POST
+    @RolesAllowed("manager")
+    public Project createProject(final Project project) { ... }
+
+    @GET
+    @Path("{id}")
+    public Project getProject(@PathParam("id") final Long id) { ... }
+----
+
+// ************** security - rest ************
+[#security-combined-level]
+== Web Secured & Policy Level
+
+image:security/rest-4.png[width=95%]
+
+// ************** transition page ************
+[#transition5, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Pros / Cons*
+
+// ************** security - rest ************
+[#security-pro-con]
+== Conclusions
+
+* Pros
+** No product lock
+** Great flexibility
+** Spec managed
+
+* Cons
+** Intrusive
+** Low Management Capability
+** Lack of Governance
+
+// ************** transition page ************
+[#transition6, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*External Player*
+
+// ************** security - rest ************
+[#security-endpoint-externe]
+== Api Manager
+
+image:security/rest-5.png[width=95%]
+
+// ************** security - rest ************
+[#security-apiman]
+== Api Man
+
+* Goal {icon-arrow-right} Externalize/Delegate security endpoint to *Api*
+
+{blank-space}
+
+* How {icon-arrow-right} Api acts as a *Proxy/Gateway* matching :
+- Incoming request against 1 {icon-arrow-right} Many policies
+- Delivering requests to *target* endpoint if validation succeeds
+
+// ************** security - rest ************
+[#security-apiman-manager]
+== Manager
+
+image:microservice/apiman-1.png[1000,1000]
+
+// ************** security - rest ************
+[#security-apiman-api]
+== Api
+
+image:microservice/apiman-2.png[1000,1000]
+
+// ************** security - rest ************
+[#security-apiman-catalog]
+== Api
+
+image:microservice/apiman-3.png[1000,1000]
+
+// ************** security - rest ************
+[#security-apiman-basic]
+== Api Man - Basic Auth
+
+* How : Associate a *Policy* using the Basic Auth Plugin to an endpoint
+
+[source]
+----
+  "contracts" : [
+    {
+      "apiOrgId" : "Policy_BasicAuthStatic",
+      "apiId" : "echo",
+      "apiVersion" : "1.0.0",
+      "policies" : [
+        {
+          "policyImpl" : "class:io.apiman.gateway.engine.policies.BasicAuthenticationPolicy",
+          "policyJsonConfig" : "{ \"realm\" : \"Test\", \"forwardIdentityHttpHeader\" : \"X-Authenticated-Identity\", \"staticIdentity\" : { \"identities\" : [ { \"username\" : \"bwayne\", \"password\" : \"bwayne\" } ] }  }"
+        }
+      ]
+    }
+  ]
+----
+
+// ************** security - rest ************
+[#security-apiman-openid]
+== Api Man - OpenId connect
+
+* Goal {icon-arrow-right} Authenticate a user using an *Identity provider* to get a *token* used for SSO purposes
+* Authentication between Client and Identity Provider: public, secret or PKI
+* *JSon Web Token* :
+- Compact token format,
+- Encode claims to be transmitted,
+- Base64url encoded and digitally signed and/or encrypted
+
+[#security-apiman-openid-example]
+== OpenId connect - Example
+
+[source]
+----
+{
+  "jti": "af68fac6-fd50-4b73-bd37-5c555a8e561e",
+  "exp": 1442847825,
+  "nbf": 0,
+  "iat": 1442847525,
+  "iss": "http://localhost:8080/auth/realms/fuse",
+  "aud": "fuse",
+  "sub": "3591e417-7c60-4464-8714-96190c7fad92",
+  "azp": "fuse",
+  "session_state": "f58d5dfc-6e4c-4ad2-bd2f-70713f6b942d",
+  "client_session": "f06b673f-ecbe-47f2-ba76-b6a5901d5afe",
+  "allowed-origins": [],
+  "realm_access": {
+    "roles": [
+      "write"
+    ]
+  },
+  "name": "writer ",
+  "preferred_username": "writer",
+  "given_name": "writer"
+}
+----
+
+// ************** security - rest ************
+[#security-apiman-rolemapping]
+== Role Mapping
+
+- Goal {icon-arrow-right} Restrict/allow access to an application based on an Authorization Rule
+- How {icon-arrow-right} Define a collection of Authorization rules as such
+  & Combined with Auth Plugin (Keycloak, Basic, ...)
+
+{blank-space}
+
+[.conference]
+|===
+|Path |Verb |Role required
+|.* |PUT |Writer
+|.* |GET |Reader
+|===
+
+// ************** security - rest ************
+[#security-micro]
+== Discovery - Cloud Platform
+
+image:security/rest-6.png[width=95%]
+
+// ************** transition page ************
+[#transition7, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Pros / Cons*
+
+// ************** security - rest ************
+[#security-pro-con-external]
+== Conclusions
+
+* Pros
+** Centralized governance policy configuration
+** Loose coupling
+** Tracking of APIs and consumers of those APIs
+** Gathering statistics/metrics
+** Service Discovery
+** Simplify security audit
+
+* Cons
+** Performance
+** New Architecture Brick
+** Features = plugins available {icon-exclamation-mark}
+
+// ************** transition page ************
+[#transition8, data-background-color="#F8F8F8"]
+== {blank-space}
+
+[#block,width="200px",left="70px",top="0px"]
+image::{revealjs_conference_logo}[]
+
+[#cover-h1,width="600px",left="0px",top="300px"]
+*Demo*
+
+// *********************************
+[#questions]
+== Questions
+
+[#block,top="200px",left="590px"]
+image:{revealjs_conference_logo}[width="70%"]
+
+[.noredheader,cols="65,.<45"]
+|===
+
+.2+|image:speaker/questions.png[width="95%",height="95%"]
+a|* Twitter : *{speaker-twitter}*
+|===
+
+* Apiman : *http://apiman.io*, Fabric8 : *http://fabric8.io*
